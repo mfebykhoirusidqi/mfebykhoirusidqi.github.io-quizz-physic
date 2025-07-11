@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Listrik Statis - Ujian Seru Edition</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for Fun Exam Theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2f7 0%, #c8e6c9 100%); /* Soft gradient background */
+            color: #333333; /* Dark gray for general text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .quiz-container {
+            background-color: #ffffff; /* Clean white background */
+            border: 1px solid #bbdefb; /* Soft blue border */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2196f3; /* Bright blue for title */
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.3rem; /* Adjusted for better mobile readability */
+            font-weight: 600;
+            color: #424242;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px; /* Slightly reduced gap */
+            margin-bottom: 25px;
+        }
+
+        .option-button {
+            background-color: #e3f2fd; /* Light blue for options */
+            border: 1px solid #90caf9; /* Medium blue border */
+            color: #333333;
+            padding: 14px 18px; /* Adjusted padding */
+            border-radius: 8px;
+            font-size: 1rem; /* Adjusted for better mobile readability */
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .option-button:hover {
+            background-color: #bbdefb; /* Darker blue on hover */
+            border-color: #64b5f6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-button.selected {
+            background-color: #90caf9; /* Medium blue when selected */
+            color: #ffffff; /* White text for selected */
+            border-color: #2196f3;
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.4);
+        }
+
+        .option-button.correct {
+            background-color: #81c784; /* Green for correct */
+            color: #ffffff;
+            border-color: #4caf50;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+        }
+
+        .option-button.incorrect {
+            background-color: #ef9a9a; /* Red for incorrect */
+            color: #ffffff;
+            border-color: #f44336;
+            box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
+        }
+
+        .feedback-message {
+            font-size: 1.1rem; /* Adjusted */
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px dashed;
+        }
+
+        .feedback-message.correct {
+            color: #4caf50; /* Green */
+            border-color: #4caf50;
+        }
+
+        .feedback-message.incorrect {
+            color: #f44336; /* Red */
+            border-color: #f44336;
+        }
+
+        .explanation-text {
+            font-size: 0.95rem; /* Adjusted */
+            color: #616161; /* Darker gray for explanation */
+            margin-top: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 15px;
+            background-color: #f5f5f5; /* Lighter background for explanation */
+            border-left: 4px solid #2196f3; /* Blue accent for explanation */
+            border-radius: 5px;
+        }
+
+        .action-button {
+            background: linear-gradient(45deg, #2196f3, #42a5f5); /* Blue gradient */
+            color: #ffffff;
+            padding: 14px 28px; /* Adjusted padding */
+            border-radius: 8px;
+            font-size: 1.1rem; /* Adjusted */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            border: none;
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.3);
+            display: inline-block;
+            margin: 8px; /* Adjusted margin */
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.5);
+        }
+
+        .score-display {
+            font-size: 1.8rem; /* Adjusted */
+            font-weight: 700;
+            color: #4caf50; /* Green for score */
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 640px) {
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .question-text {
+                font-size: 1.4rem;
+            }
+            .option-button {
+                font-size: 1.05rem;
+            }
+            .action-button {
+                font-size: 1.15rem;
+            }
+            .score-display {
+                font-size: 2rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .quiz-container {
+                padding: 40px;
+            }
+            .quiz-title {
+                font-size: 2.8rem;
+            }
+            .question-text {
+                font-size: 1.6rem;
+            }
+            .option-button {
+                font-size: 1.1rem;
+            }
+            .action-button {
+                padding: 16px 32px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="quizApp" class="quiz-container">
+        <h1 class="quiz-title">Kuis Listrik Statis</h1>
+
+        <div id="questionScreen">
+            <img id="questionImage" class="question-image hidden" alt="Ilustrasi Soal">
+            <p id="questionText" class="question-text"></p>
+            <div id="optionsContainer" class="options-grid">
+                <!-- Options will be loaded here by JavaScript -->
+            </div>
+            <div id="feedbackMessage" class="feedback-message hidden"></div>
+            <div id="explanationText" class="explanation-text hidden"></div>
+            <button id="submitButton" class="action-button">Kirim Jawaban</button>
+            <button id="nextButton" class="action-button hidden">Lanjut</button>
+        </div>
+
+        <div id="resultScreen" class="hidden">
+            <h2 class="score-display">Skor Anda: <span id="finalScore">0</span> / 10</h2>
+            <p class="question-text">Selamat! Anda telah menyelesaikan kuis.</p>
+            <button id="restartButton" class="action-button">Mulai Lagi</button>
+        </div>
+    </div>
+
+    <script>
+        // Array of quiz questions
+        const quizQuestions = [
+            {
+                question: "Sebuah batang kaca digosok dengan kain sutra. Setelah digosok, batang kaca akan bermuatan positif. Mengapa hal ini terjadi?",
+                image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgWafW6M-sROBUbzBgo2dQLLEuGjehtodz7IdPqg9XonbpA1BIlQCnbmOq3uW0iOw8oQYfody_6gVniWLHas7AjefKybAfYeThsP2bGf_2jFOSbrodNkbxrUSpljbMR1ftQG7zP7wgVod-i/w400-h224/Kaca+Digosok+Kain+Sutera.webp",
+                options: [
+                    { text: "Batang kaca menerima elektron dari kain sutra.", isCorrect: false, rationale: "Ketika batang kaca digosok dengan sutra, batang kaca kehilangan elektron dan sutra menerima elektron, sehingga batang kaca menjadi positif." },
+                    { text: "Batang kaca kehilangan proton ke kain sutra.", isCorrect: false, rationale: "Proton berada di inti atom dan tidak mudah berpindah dalam proses penggosokan. Yang berpindah adalah elektron." },
+                    { text: "Batang kaca kehilangan elektron ke kain sutra.", isCorrect: true, rationale: "Proses penggosokan menyebabkan perpindahan elektron. Batang kaca cenderung melepaskan elektron dan menjadi bermuatan positif, sedangkan kain sutra menerima elektron dan menjadi bermuatan negatif." },
+                    { text: "Batang kaca menerima proton dari kain sutra.", isCorrect: false, rationale: "Proton tidak berpindah dalam proses ini." }
+                ]
+            },
+            {
+                question: "Dua buah muatan listrik sejenis yang terpisah pada jarak tertentu akan mengalami gaya interaksi. Gaya apakah yang terjadi antara kedua muatan tersebut?",
+                options: [
+                    { text: "Gaya tarik-menarik.", isCorrect: false, rationale: "Muatan sejenis (positif dengan positif, atau negatif dengan negatif) akan saling tolak-menolak." },
+                    { text: "Gaya tolak-menolak.", isCorrect: true, rationale: "Hukum Coulomb menyatakan bahwa muatan sejenis akan saling tolak-menolak, sedangkan muatan tidak sejenis akan saling tarik-menarik." },
+                    { text: "Gaya gravitasi.", isCorrect: false, rationale: "Gaya gravitasi adalah gaya tarik-menarik antara benda bermassa, bukan gaya interaksi antara muatan listrik." },
+                    { text: "Gaya magnet.", isCorrect: false, rationale: "Gaya magnet terjadi akibat gerakan muatan atau medan magnet, bukan interaksi statis antar muatan." }
+                ]
+            },
+            {
+                question: "Sebuah benda netral didekati oleh benda bermuatan negatif tanpa bersentuhan. Bagian benda netral yang paling dekat dengan benda bermuatan akan menjadi bermuatan...",
+                image: "https://learnwithalice.wordpress.com/wp-content/uploads/2014/03/list_statis_04.jpg",
+                options: [
+                    { text: "Negatif.", isCorrect: false, rationale: "Jika benda bermuatan negatif mendekat, elektron pada benda netral akan menjauhi benda bermuatan, meninggalkan bagian yang dekat menjadi positif." },
+                    { text: "Positif.", isCorrect: true, rationale: "Ini adalah prinsip induksi elektrostatik. Elektron pada benda netral akan bergerak menjauhi benda bermuatan negatif yang mendekat, sehingga bagian yang dekat akan kekurangan elektron (bermuatan positif) dan bagian yang jauh akan kelebihan elektron (bermuatan negatif)." },
+                    { text: "Netral.", isCorrect: false, rationale: "Meskipun benda secara keseluruhan tetap netral, terjadi polarisasi muatan di dalamnya." },
+                    { text: "Tidak dapat ditentukan.", isCorrect: false, rationale: "Dapat ditentukan berdasarkan prinsip induksi." }
+                ]
+            },
+            {
+                question: "Hukum Coulomb menjelaskan tentang gaya interaksi antara dua muatan listrik. Jika jarak antara dua muatan diperbesar 2 kali, bagaimana perubahan gaya Coulomb yang terjadi?",
+                options: [
+                    { text: "Gaya menjadi 2 kali lebih besar.", isCorrect: false, rationale: "Gaya Coulomb berbanding terbalik dengan kuadrat jarak." },
+                    { text: "Gaya menjadi 4 kali lebih besar.", isCorrect: false, rationale: "Gaya Coulomb berbanding terbalik dengan kuadrat jarak." },
+                    { text: "Gaya menjadi 1/2 kali lebih kecil.", isCorrect: false, rationale: "Gaya menjadi 1/4 kali lebih kecil." },
+                    { text: "Gaya menjadi 1/4 kali lebih kecil.", isCorrect: true, rationale: "Menurut Hukum Coulomb, gaya ($F$) berbanding terbalik dengan kuadrat jarak ($r$) ($F \\propto 1/r^2$). Jika jarak menjadi 2r, maka gaya menjadi $1/(2r)^2 = 1/(4r^2)$, atau 1/4 dari gaya semula." }
+                ]
+            },
+            {
+                question: "Medan listrik didefinisikan sebagai daerah di sekitar muatan listrik di mana muatan listrik lain akan mengalami gaya. Satuan SI untuk kuat medan listrik adalah...",
+                
+                options: [
+                    { text: "Joule (J).", isCorrect: false, rationale: "Joule adalah satuan energi." },
+                    { text: "Volt (V).", isCorrect: false, rationale: "Volt adalah satuan potensial listrik." },
+                    { text: "Newton per Coulomb (N/C).", isCorrect: true, rationale: "Kuat medan listrik ($E$) didefinisikan sebagai gaya ($F$) per satuan muatan uji ($q$), $E = F/q$. Jadi, satuannya adalah Newton per Coulomb." },
+                    { text: "Coulomb (C).", isCorrect: false, rationale: "Coulomb adalah satuan muatan listrik." }
+                ]
+            },
+            {
+                question: "Potensial listrik pada suatu titik didefinisikan sebagai energi potensial per satuan muatan uji di titik tersebut. Jika sebuah muatan positif dipindahkan dari titik A ke titik B yang memiliki potensial lebih tinggi, maka...",
+               
+                options: [
+                    { text: "Energi potensial listrik muatan tersebut berkurang.", isCorrect: false, rationale: "Memindahkan muatan positif ke potensial yang lebih tinggi membutuhkan kerja dan meningkatkan energi potensialnya." },
+                    { text: "Energi potensial listrik muatan tersebut bertambah.", isCorrect: true, rationale: "Sama seperti mengangkat benda ke tempat yang lebih tinggi dalam medan gravitasi, memindahkan muatan positif ke potensial listrik yang lebih tinggi akan meningkatkan energi potensial listriknya." },
+                    { text: "Tidak ada perubahan energi potensial listrik.", isCorrect: false, rationale: "Akan ada perubahan energi potensial jika ada perbedaan potensial." },
+                    { text: "Muatan tersebut akan bergerak secara spontan dari A ke B.", isCorrect: false, rationale: "Muatan positif akan bergerak spontan dari potensial tinggi ke potensial rendah." }
+                ]
+            },
+            {
+                question: "Petir adalah fenomena alam yang merupakan contoh pelepasan muatan listrik statis. Bagaimana awan dapat bermuatan listrik hingga menyebabkan petir?",
+                image: "https://www.itb.ac.id/files/images/1557714331.jpg",
+                options: [
+                    { text: "Akumulasi muatan positif dari tanah.", isCorrect: false, rationale: "Awan bermuatan melalui gesekan partikel di dalamnya." },
+                    { text: "Gesekan antara partikel-partikel es dan air di dalam awan.", isCorrect: true, rationale: "Gesekan antara partikel-partikel es, air, dan butiran salju di dalam awan (triboelektrifikasi) menyebabkan pemisahan muatan, di mana muatan positif cenderung berkumpul di bagian atas awan dan muatan negatif di bagian bawah." },
+                    { text: "Penyerapan elektron dari udara sekitar.", isCorrect: false, rationale: "Meskipun ada interaksi dengan udara, gesekan internal adalah penyebab utama." },
+                    { text: "Reaksi kimia di dalam awan.", isCorrect: false, rationale: "Petir adalah fenomena listrik, bukan kimia." }
+                ]
+            },
+            {
+                question: "Elektroskop adalah alat yang digunakan untuk mendeteksi keberadaan muatan listrik. Jika sebuah benda bermuatan positif didekatkan pada kepala elektroskop netral, apa yang akan terjadi pada daun elektroskop?",
+
+                options: [
+                    { text: "Daun elektroskop akan menguncup.", isCorrect: false, rationale: "Menguncup berarti tidak ada muatan atau muatan yang saling menetralkan." },
+                    { text: "Daun elektroskop akan tetap diam.", isCorrect: false, rationale: "Akan ada reaksi karena induksi muatan." },
+                    { text: "Daun elektroskop akan mengembang karena bermuatan positif.", isCorrect: true, rationale: "Ketika benda bermuatan positif didekatkan, elektron dari daun elektroskop akan tertarik ke kepala elektroskop, meninggalkan daun bermuatan positif. Karena kedua daun bermuatan positif, mereka akan saling tolak-menolak (mengembang)." },
+                    { text: "Daun elektroskop akan mengembang karena bermuatan negatif.", isCorrect: false, rationale: "Daun akan bermuatan positif, bukan negatif." }
+                ]
+            },
+            {
+                question: "Manakah dari pernyataan berikut yang paling tepat menggambarkan konsep 'konduktor' dalam listrik statis?",
+        
+                options: [
+                    { text: "Bahan yang tidak dapat menghantarkan listrik.", isCorrect: false, rationale: "Ini adalah definisi isolator." },
+                    { text: "Bahan yang memiliki elektron terikat kuat pada atomnya.", isCorrect: false, rationale: "Ini adalah karakteristik isolator." },
+                    { text: "Bahan yang memungkinkan muatan listrik bergerak bebas di dalamnya.", isCorrect: true, rationale: "Konduktor adalah bahan yang memiliki banyak elektron bebas yang dapat bergerak dengan mudah, sehingga memungkinkan aliran muatan listrik." },
+                    { text: "Bahan yang hanya dapat bermuatan melalui gesekan.", isCorrect: false, rationale: "Semua bahan dapat bermuatan melalui gesekan, tetapi konduktor juga dapat bermuatan melalui konduksi dan induksi." }
+                ]
+            },
+            {
+                question: "Dalam sebuah rangkaian kapasitor seri, apa yang terjadi pada kapasitansi total ketika lebih banyak kapasitor ditambahkan?",
+                options: [
+                    { text: "Kapasitansi total meningkat.", isCorrect: false, rationale: "Dalam rangkaian seri, kapasitansi total akan berkurang." },
+                    { text: "Kapasitansi total berkurang.", isCorrect: true, rationale: "Untuk kapasitor yang dihubungkan secara seri, kapasitansi total ($1/C_{total} = 1/C_1 + 1/C_2 + ... + 1/C_n$) akan selalu lebih kecil dari kapasitansi individu terkecil." },
+                    { text: "Kapasitansi total tetap sama.", isCorrect: false, rationale: "Penambahan kapasitor akan mengubah kapasitansi total." },
+                    { text: "Kapasitansi total menjadi tak hingga.", isCorrect: false, rationale: "Ini tidak mungkin terjadi dalam rangkaian nyata." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswerIndex = null;
+        let quizSubmitted = false; // Flag to check if current question has been submitted
+
+        // Get DOM elements
+        const questionText = document.getElementById('questionText');
+        const questionImage = document.getElementById('questionImage');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const submitButton = document.getElementById('submitButton');
+        const nextButton = document.getElementById('nextButton');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const explanationText = document.getElementById('explanationText');
+        const questionScreen = document.getElementById('questionScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const finalScore = document.getElementById('finalScore');
+        const restartButton = document.getElementById('restartButton');
+
+        // Function to load a question
+        function loadQuestion() {
+            // Reset state for new question
+            selectedAnswerIndex = null;
+            quizSubmitted = false;
+            feedbackMessage.classList.add('hidden');
+            explanationText.classList.add('hidden');
+            submitButton.classList.remove('hidden');
+            nextButton.classList.add('hidden');
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            questionText.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            
+            // Handle image display
+            if (currentQuestion.image) {
+                questionImage.src = currentQuestion.image;
+                questionImage.classList.remove('hidden');
+            } else {
+                questionImage.classList.add('hidden');
+                questionImage.src = ''; // Clear src if no image
+            }
+
+            optionsContainer.innerHTML = ''; // Clear previous options
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.classList.add('option-button');
+                button.setAttribute('data-index', index);
+                button.addEventListener('click', () => selectAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Function to select an answer
+        function selectAnswer(index) {
+            if (quizSubmitted) return; // Prevent changing selection after submission
+
+            selectedAnswerIndex = index;
+            // Remove 'selected' class from all options
+            document.querySelectorAll('.option-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            // Add 'selected' class to the clicked option
+            document.querySelector(`.option-button[data-index="${index}"]`).classList.add('selected');
+        }
+
+        // Function to submit the answer
+        function submitAnswer() {
+            if (selectedAnswerIndex === null) {
+                feedbackMessage.textContent = 'Pilih salah satu jawaban dulu!';
+                feedbackMessage.classList.remove('hidden');
+                feedbackMessage.classList.remove('correct', 'incorrect');
+                feedbackMessage.style.color = '#ff9800'; /* Orange for warning */
+                feedbackMessage.style.borderColor = '#ff9800';
+                return;
+            }
+
+            quizSubmitted = true; // Mark question as submitted
+            submitButton.classList.add('hidden');
+            nextButton.classList.remove('hidden');
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const selectedOption = currentQuestion.options[selectedAnswerIndex];
+
+            // Show feedback and explanation
+            feedbackMessage.classList.remove('hidden');
+            explanationText.classList.remove('hidden');
+            explanationText.textContent = `Pembahasan: ${selectedOption.rationale}`;
+
+            // Highlight correct/incorrect options
+            document.querySelectorAll('.option-button').forEach((btn, index) => {
+                btn.removeEventListener('click', () => selectAnswer(index)); // Disable further clicks
+                const optionData = currentQuestion.options[index];
+
+                if (optionData.isCorrect) {
+                    btn.classList.add('correct');
+                } else if (index === selectedAnswerIndex) {
+                    btn.classList.add('incorrect');
+                }
+                btn.classList.remove('selected'); // Remove selected highlight
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                feedbackMessage.textContent = 'Jawaban Anda Benar!';
+                feedbackMessage.classList.remove('incorrect');
+                feedbackMessage.classList.add('correct');
+            } else {
+                feedbackMessage.textContent = 'Jawaban Anda Salah.';
+                feedbackMessage.classList.remove('correct');
+                feedbackMessage.classList.add('incorrect');
+            }
+        }
+
+        // Function to move to the next question or show results
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                displayResult();
+            }
+        }
+
+        // Function to display final result
+        function displayResult() {
+            questionScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            finalScore.textContent = score;
+        }
+
+        // Function to restart the quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultScreen.classList.add('hidden');
+            questionScreen.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Event Listeners
+        submitButton.addEventListener('click', submitAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        restartButton.addEventListener('click', restartQuiz);
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>

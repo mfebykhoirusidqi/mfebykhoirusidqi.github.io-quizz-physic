@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Listrik DC - Ujian Seru Edition</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for Fun Exam Theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2f7 0%, #c8e6c9 100%); /* Soft gradient background */
+            color: #333333; /* Dark gray for general text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .quiz-container {
+            background-color: #ffffff; /* Clean white background */
+            border: 1px solid #bbdefb; /* Soft blue border */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2196f3; /* Bright blue for title */
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.3rem; /* Adjusted for better mobile readability */
+            font-weight: 600;
+            color: #424242;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px; /* Slightly reduced gap */
+            margin-bottom: 25px;
+        }
+
+        .option-button {
+            background-color: #e3f2fd; /* Light blue for options */
+            border: 1px solid #90caf9; /* Medium blue border */
+            color: #333333;
+            padding: 14px 18px; /* Adjusted padding */
+            border-radius: 8px;
+            font-size: 1rem; /* Adjusted for better mobile readability */
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .option-button:hover {
+            background-color: #bbdefb; /* Darker blue on hover */
+            border-color: #64b5f6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-button.selected {
+            background-color: #90caf9; /* Medium blue when selected */
+            color: #ffffff; /* White text for selected */
+            border-color: #2196f3;
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.4);
+        }
+
+        .option-button.correct {
+            background-color: #81c784; /* Green for correct */
+            color: #ffffff;
+            border-color: #4caf50;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+        }
+
+        .option-button.incorrect {
+            background-color: #ef9a9a; /* Red for incorrect */
+            color: #ffffff;
+            border-color: #f44336;
+            box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
+        }
+
+        .feedback-message {
+            font-size: 1.1rem; /* Adjusted */
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px dashed;
+        }
+
+        .feedback-message.correct {
+            color: #4caf50; /* Green */
+            border-color: #4caf50;
+        }
+
+        .feedback-message.incorrect {
+            color: #f44336; /* Red */
+            border-color: #f44336;
+        }
+
+        .explanation-text {
+            font-size: 0.95rem; /* Adjusted */
+            color: #616161; /* Darker gray for explanation */
+            margin-top: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 15px;
+            background-color: #f5f5f5; /* Lighter background for explanation */
+            border-left: 4px solid #2196f3; /* Blue accent for explanation */
+            border-radius: 5px;
+        }
+
+        .action-button {
+            background: linear-gradient(45deg, #2196f3, #42a5f5); /* Blue gradient */
+            color: #ffffff;
+            padding: 14px 28px; /* Adjusted padding */
+            border-radius: 8px;
+            font-size: 1.1rem; /* Adjusted */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            border: none;
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.3);
+            display: inline-block;
+            margin: 8px; /* Adjusted margin */
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.5);
+        }
+
+        .score-display {
+            font-size: 1.8rem; /* Adjusted */
+            font-weight: 700;
+            color: #4caf50; /* Green for score */
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 640px) {
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .question-text {
+                font-size: 1.4rem;
+            }
+            .option-button {
+                font-size: 1.05rem;
+            }
+            .action-button {
+                font-size: 1.15rem;
+            }
+            .score-display {
+                font-size: 2rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .quiz-container {
+                padding: 40px;
+            }
+            .quiz-title {
+                font-size: 2.8rem;
+            }
+            .question-text {
+                font-size: 1.6rem;
+            }
+            .option-button {
+                font-size: 1.1rem;
+            }
+            .action-button {
+                padding: 16px 32px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="quizApp" class="quiz-container">
+        <h1 class="quiz-title">Kuis Listrik DC</h1>
+
+        <div id="questionScreen">
+            <p id="questionText" class="question-text"></p>
+            <div id="optionsContainer" class="options-grid">
+                <!-- Options will be loaded here by JavaScript -->
+            </div>
+            <div id="feedbackMessage" class="feedback-message hidden"></div>
+            <div id="explanationText" class="explanation-text hidden"></div>
+            <button id="submitButton" class="action-button">Kirim Jawaban</button>
+            <button id="nextButton" class="action-button hidden">Lanjut</button>
+        </div>
+
+        <div id="resultScreen" class="hidden">
+            <h2 class="score-display">Skor Anda: <span id="finalScore">0</span> / 10</h2>
+            <p class="question-text">Selamat! Anda telah menyelesaikan kuis.</p>
+            <button id="restartButton" class="action-button">Mulai Lagi</button>
+            <button class="action-button"> <a href="index.html">Menu Utama </a></button>
+        </div>
+    </div>
+
+    <script>
+        // Array of quiz questions
+        const quizQuestions = [
+            {
+                question: "Arus listrik DC mengalir dalam satu arah saja, dari potensial tinggi ke potensial rendah. Konsep ini pertama kali diteliti secara sistematis oleh siapa?",
+                options: [
+                    { text: "Nikola Tesla", isCorrect: false, rationale: "Nikola Tesla dikenal atas kontribusinya pada sistem arus bolak-balik (AC), bukan arus searah (DC)." },
+                    { text: "Thomas Edison", isCorrect: true, rationale: "Thomas Edison adalah pendukung utama dan pengembang sistem distribusi listrik DC komersial." },
+                    { text: "Alessandro Volta", isCorrect: false, rationale: "Alessandro Volta menemukan baterai volta, tetapi Edison yang secara sistematis meneliti dan mempopulerkan distribusi DC." },
+                    { text: "Michael Faraday", isCorrect: false, rationale: "Michael Faraday dikenal dengan penemuan induksi elektromagnetik, bukan konsep sistematis aliran DC." }
+                ]
+            },
+            {
+                question: "Salah satu keunggulan utama listrik DC adalah kemampuannya untuk disimpan. Dalam perangkat apa listrik DC paling sering disimpan?",
+                options: [
+                    { text: "Generator", isCorrect: false, rationale: "Generator menghasilkan listrik, tetapi tidak menyimpannya dalam bentuk DC yang siap digunakan." },
+                    { text: "Transformator", isCorrect: false, rationale: "Transformator digunakan untuk mengubah tegangan AC, bukan untuk menyimpan listrik DC." },
+                    { text: "Kapasitor", isCorrect: false, rationale: "Kapasitor menyimpan energi dalam medan listrik, tetapi untuk jangka waktu singkat dan bukan cara utama penyimpanan DC jangka panjang." },
+                    { text: "Baterai", isCorrect: true, rationale: "Baterai adalah perangkat yang paling umum digunakan untuk menyimpan energi listrik DC melalui reaksi kimia." }
+                ]
+            },
+            {
+                question: "Mengapa sistem distribusi listrik DC skala besar mengalami kesulitan dan akhirnya digantikan oleh sistem AC untuk transmisi jarak jauh pada awal abad ke-20?",
+                options: [
+                    { text: "Listrik DC tidak dapat diubah tegangannya secara efisien.", isCorrect: true, rationale: "Listrik DC sulit untuk diubah tegangannya secara efisien tanpa kehilangan energi yang signifikan, terutama pada tegangan tinggi. Ini menyebabkan kerugian daya yang besar pada transmisi jarak jauh." },
+                    { text: "Peralatan DC terlalu mahal.", isCorrect: false, rationale: "Meskipun ada biaya, alasan utama penggantian adalah masalah teknis efisiensi transmisi, bukan hanya biaya peralatan." },
+                    { text: "Listrik DC terlalu berbahaya.", isCorrect: false, rationale: "Baik AC maupun DC memiliki bahayanya sendiri, tetapi masalah utama DC adalah kesulitan transmisi jarak jauh yang efisien." },
+                    { text: "Tidak ada permintaan untuk listrik DC.", isCorrect: false, rationale: "Ada permintaan untuk listrik DC, tetapi ada kendala teknis dalam mendistribusikannya secara efisien dalam skala besar." }
+                ]
+            },
+            {
+                question: "Dalam rangkaian listrik DC sederhana, hukum Ohm menyatakan hubungan antara tegangan (V), arus (I), dan hambatan (R). Manakah persamaan yang benar untuk hukum Ohm?",
+                options: [
+                    { text: "V = I/R", isCorrect: false, rationale: "Persamaan ini salah. Tegangan adalah hasil kali arus dan hambatan, bukan pembagian." },
+                    { text: "I = V x R", isCorrect: false, rationale: "Persamaan ini salah. Arus adalah hasil bagi tegangan dengan hambatan." },
+                    { text: "R = V/I", isCorrect: true, rationale: "Persamaan ini benar dan merupakan bentuk lain dari hukum Ohm, di mana hambatan adalah hasil bagi tegangan dengan arus." },
+                    { text: "V = I x R", isCorrect: true, rationale: "Persamaan ini adalah bentuk umum dari hukum Ohm yang menyatakan bahwa tegangan (V) adalah hasil kali arus (I) dan hambatan (R)." }
+                ]
+            },
+            {
+                question: "Perangkat mana yang mengubah arus bolak-balik (AC) menjadi arus searah (DC)?",
+                options: [
+                    { text: "Inverter", isCorrect: false, rationale: "Inverter mengubah DC menjadi AC." },
+                    { text: "Transformator", isCorrect: false, rationale: "Transformator mengubah tegangan AC tanpa mengubah jenis arusnya." },
+                    { text: "Generator", isCorrect: false, rationale: "Generator menghasilkan listrik, bisa AC atau DC, tetapi bukan untuk mengubah AC menjadi DC." },
+                    { text: "Rectifier", isCorrect: true, rationale: "Rectifier (penyearah) adalah perangkat yang menggunakan dioda untuk mengubah arus bolak-balik (AC) menjadi arus searah (DC)." }
+                ]
+            },
+            {
+                question: "Apa yang terjadi pada total hambatan dalam rangkaian seri DC ketika lebih banyak resistor ditambahkan?",
+                options: [
+                    { text: "Total hambatan berkurang.", isCorrect: false, rationale: "Dalam rangkaian seri, penambahan resistor akan meningkatkan total hambatan karena arus harus melewati lebih banyak halangan." },
+                    { text: "Total hambatan meningkat.", isCorrect: true, rationale: "Dalam rangkaian seri, total hambatan adalah jumlah hambatan individu, sehingga penambahan resistor akan selalu meningkatkan total hambatan (Rtotal = R1 + R2 + ... + Rn)." },
+                    { text: "Total hambatan tidak berubah.", isCorrect: false, rationale: "Ini tidak benar. Perubahan jumlah resistor dalam rangkaian seri akan selalu mengubah total hambatan." },
+                    { text: "Total hambatan menjadi nol.", isCorrect: false, rationale: "Ini hanya terjadi pada kondisi ideal dengan kawat superkonduktor atau tanpa resistor sama sekali." }
+                ]
+            },
+            {
+                question: "Dalam konteks sejarah listrik DC, siapa yang terlibat dalam 'Perang Arus' melawan Thomas Edison yang mempromosikan AC?",
+                options: [
+                    { text: "Benjamin Franklin", isCorrect: false, rationale: "Benjamin Franklin adalah ilmuwan awal yang meneliti listrik, jauh sebelum 'Perang Arus'." },
+                    { text: "James Watt", isCorrect: false, rationale: "James Watt dikenal atas kontribusinya pada mesin uap, bukan perang arus." },
+                    { text: "Nikola Tesla", isCorrect: true, rationale: "Nikola Tesla adalah tokoh kunci dalam mempromosikan dan mengembangkan sistem arus bolak-balik (AC) yang bersaing sengit dengan sistem DC Edison dalam 'Perang Arus'." },
+                    { text: "Guglielmo Marconi", isCorrect: false, rationale: "Guglielmo Marconi dikenal sebagai pelopor radio, bukan dalam 'Perang Arus'." }
+                ]
+            },
+            {
+                question: "Apa kerugian utama listrik DC dalam aplikasi rumah tangga modern dibandingkan dengan AC?",
+                options: [
+                    { text: "Lebih mahal untuk dihasilkan.", isCorrect: false, rationale: "Biaya produksi bisa bervariasi, tetapi bukan kerugian utama DC dibandingkan AC untuk aplikasi rumah tangga." },
+                    { text: "Sulit untuk mengubah tegangannya secara efisien.", isCorrect: true, rationale: "Ini adalah kerugian utama. Tegangan DC sulit untuk dinaikkan atau diturunkan tanpa kehilangan energi yang besar, yang menyulitkan transmisi jarak jauh dan distribusi ke berbagai perangkat dengan tegangan yang berbeda." },
+                    { text: "Tidak dapat digunakan untuk perangkat elektronik.", isCorrect: false, rationale: "Ini salah, banyak perangkat elektronik modern menggunakan DC setelah dikonversi dari AC." },
+                    { text: "Menghasilkan lebih banyak panas.", isCorrect: false, rationale: "Baik AC maupun DC menghasilkan panas, tetapi bukan kerugian utama yang membedakan dalam aplikasi rumah tangga." }
+                ]
+            },
+            {
+                question: "Listrik DC masih banyak digunakan dalam aplikasi tertentu karena keunggulannya. Manakah di antara berikut ini yang merupakan contoh aplikasi listrik DC?",
+                options: [
+                    { text: "Transmisi listrik jarak jauh melalui jalur transmisi tegangan tinggi.", isCorrect: false, rationale: "Ini adalah aplikasi utama AC, bukan DC, karena efisiensi pengubahan tegangan AC." },
+                    { text: "Penerangan jalan umum menggunakan lampu pijar.", isCorrect: false, rationale: "Penerangan jalan umum umumnya menggunakan AC, meskipun lampu LED modern bisa menggunakan DC setelah konversi." },
+                    { text: "Pengisian daya ponsel dan laptop.", isCorrect: true, rationale: "Ponsel dan laptop menggunakan baterai yang diisi dengan listrik DC, meskipun adaptor daya mengkonversi AC ke DC dari sumber AC." },
+                    { text: "Operasi peralatan rumah tangga besar seperti lemari es dan mesin cuci.", isCorrect: false, rationale: "Peralatan rumah tangga besar umumnya dirancang untuk beroperasi dengan listrik AC dari jaringan listrik." }
+                ]
+            },
+            {
+                question: "Ketika beberapa baterai dihubungkan secara seri, apa yang terjadi pada total tegangan yang dihasilkan?",
+                options: [
+                    { text: "Total tegangan tetap sama.", isCorrect: false, rationale: "Ini tidak benar. Menghubungkan baterai secara seri akan mengubah total tegangan." },
+                    { text: "Total tegangan berkurang.", isCorrect: false, rationale: "Ini tidak benar. Dalam konfigurasi seri, tegangan justru akan bertambah." },
+                    { text: "Total tegangan meningkat.", isCorrect: true, rationale: "Ketika baterai dihubungkan secara seri (positif ke negatif), tegangan setiap baterai akan dijumlahkan, sehingga meningkatkan total tegangan." },
+                    { text: "Total tegangan menjadi nol.", isCorrect: false, rationale: "Ini hanya terjadi jika baterai dihubungkan dengan polaritas yang berlawanan dan tegangannya saling menghilangkan." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswerIndex = null;
+        let quizSubmitted = false; // Flag to check if current question has been submitted
+
+        // Get DOM elements
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const submitButton = document.getElementById('submitButton');
+        const nextButton = document.getElementById('nextButton');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const explanationText = document.getElementById('explanationText');
+        const questionScreen = document.getElementById('questionScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const finalScore = document.getElementById('finalScore');
+        const restartButton = document.getElementById('restartButton');
+
+        // Function to load a question
+        function loadQuestion() {
+            // Reset state for new question
+            selectedAnswerIndex = null;
+            quizSubmitted = false;
+            feedbackMessage.classList.add('hidden');
+            explanationText.classList.add('hidden');
+            submitButton.classList.remove('hidden');
+            nextButton.classList.add('hidden');
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            questionText.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            optionsContainer.innerHTML = ''; // Clear previous options
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.classList.add('option-button');
+                button.setAttribute('data-index', index);
+                button.addEventListener('click', () => selectAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Function to select an answer
+        function selectAnswer(index) {
+            if (quizSubmitted) return; // Prevent changing selection after submission
+
+            selectedAnswerIndex = index;
+            // Remove 'selected' class from all options
+            document.querySelectorAll('.option-button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            // Add 'selected' class to the clicked option
+            document.querySelector(`.option-button[data-index="${index}"]`).classList.add('selected');
+        }
+
+        // Function to submit the answer
+        function submitAnswer() {
+            if (selectedAnswerIndex === null) {
+                feedbackMessage.textContent = 'Pilih salah satu jawaban dulu!';
+                feedbackMessage.classList.remove('hidden');
+                feedbackMessage.classList.remove('correct', 'incorrect');
+                feedbackMessage.style.color = '#ff9800'; /* Orange for warning */
+                feedbackMessage.style.borderColor = '#ff9800';
+                return;
+            }
+
+            quizSubmitted = true; // Mark question as submitted
+            submitButton.classList.add('hidden');
+            nextButton.classList.remove('hidden');
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const selectedOption = currentQuestion.options[selectedAnswerIndex];
+
+            // Show feedback and explanation
+            feedbackMessage.classList.remove('hidden');
+            explanationText.classList.remove('hidden');
+            explanationText.textContent = `Pembahasan: ${selectedOption.rationale}`;
+
+            // Highlight correct/incorrect options
+            document.querySelectorAll('.option-button').forEach((btn, index) => {
+                btn.removeEventListener('click', () => selectAnswer(index)); // Disable further clicks
+                const optionData = currentQuestion.options[index];
+
+                if (optionData.isCorrect) {
+                    btn.classList.add('correct');
+                } else if (index === selectedAnswerIndex) {
+                    btn.classList.add('incorrect');
+                }
+                btn.classList.remove('selected'); // Remove selected highlight
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                feedbackMessage.textContent = 'Jawaban Anda Benar!';
+                feedbackMessage.classList.remove('incorrect');
+                feedbackMessage.classList.add('correct');
+            } else {
+                feedbackMessage.textContent = 'Jawaban Anda Salah.';
+                feedbackMessage.classList.remove('correct');
+                feedbackMessage.classList.add('incorrect');
+            }
+        }
+
+        // Function to move to the next question or show results
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                displayResult();
+            }
+        }
+
+        // Function to display final result
+        function displayResult() {
+            questionScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            finalScore.textContent = score;
+        }
+
+        // Function to restart the quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultScreen.classList.add('hidden');
+            questionScreen.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Event Listeners
+        submitButton.addEventListener('click', submitAnswer);
+        nextButton.addEventListener('click', nextQuestion);
+        restartButton.addEventListener('click', restartQuiz);
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+</body>
+</html>
