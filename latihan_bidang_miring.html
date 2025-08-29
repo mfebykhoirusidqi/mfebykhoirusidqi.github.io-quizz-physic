@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Hukum Newton - Fisika SMA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0077b6;
+            --secondary-color: #48cae4;
+            --success-color: #2a9d8f;
+            --danger-color: #e63946;
+            --light-bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .header p {
+            color: var(--secondary-color);
+            font-weight: 400;
+        }
+
+        .quiz-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .quiz-card.active {
+            display: block;
+        }
+
+        .question {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+        
+        .question p {
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            background-color: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #e6f0ff;
+        }
+
+        .option-item.correct {
+            background-color: var(--success-color);
+            color: var(--card-bg);
+            border-color: var(--success-color);
+        }
+
+        .option-item.incorrect {
+            background-color: var(--danger-color);
+            color: var(--card-bg);
+            border-color: var(--danger-color);
+        }
+        
+        .option-item.correct::after {
+            content: '✓';
+            float: right;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .option-item.incorrect::after {
+            content: '×';
+            float: right;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--card-bg);
+        }
+
+        .btn-primary:hover {
+            background-color: #004b7c;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--card-bg);
+        }
+
+        .btn-secondary:hover {
+            background-color: #00b4d8;
+        }
+
+        #pembahasan-section {
+            background-color: #eaf8ff;
+            border-left: 5px solid var(--primary-color);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        #pembahasan-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        #pembahasan-section p, #pembahasan-section ul, #pembahasan-section li {
+            line-height: 1.6;
+            font-size: 1em;
+        }
+        
+        .final-message {
+            text-align: center;
+            font-size: 1.8em;
+            color: var(--success-color);
+            display: none;
+            padding: 50px 0;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Kuis Bidang Miring</h1>
+            <p>Level Ujian Nasional & TKA Fisika</p>
+        </div>
+
+        <div id="quiz-container">
+            </div>
+
+        <div class="final-message" id="final-message">
+            🎉 Kuis Selesai! Selamat! 🎉
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: `<p>Dua balok bermassa m1=3 kg dan m2=2 kg dihubungkan oleh tali tak bermassa. Balok m1 berada di atas bidang miring licin dengan sudut kemiringan 30°, sementara balok m2 digantung bebas. Jika sistem bergerak, tentukan percepatan sistem dan tegangan tali yang menghubungkan kedua balok. (Gunakan g = 10 m/s²).</p>`,
+                options: [
+                    "Percepatan 1 m/s², Tegangan 18 N",
+                    "Percepatan 1 m/s², Tegangan 15 N",
+                    "Percepatan 2 m/s², Tegangan 18 N",
+                    "Percepatan 2 m/s², Tegangan 20 N"
+                ],
+                answer: "Percepatan 1 m/s², Tegangan 18 N",
+                discussion: `
+                    <h3>Pembahasan Soal 1</h3>
+                    <p><strong>1. Analisis Gaya pada Setiap Balok:</strong></p>
+                    <ul>
+                        <li><strong>Balok 1:</strong> Komponen gaya berat yang sejajar bidang miring adalah $W_{1x}$.
+                            <br> $W_{1x} = W_1 \\sin 30^\\circ = m_1 g \\sin 30^\\circ = 3 \\cdot 10 \\cdot 0,5 = 15$ N.
+                        </li>
+                        <li><strong>Balok 2:</strong> Gaya beratnya adalah $W_2 = m_2 g = 2 \\cdot 10 = 20$ N.</li>
+                    </ul>
+                    <p><strong>2. Terapkan Hukum II Newton ($\\Sigma F = ma$):</strong></p>
+                    <ul>
+                        <li><strong>Pada Balok 1:</strong> $T - W_{1x} = m_1 a \\implies T - 15 = 3a$ (Persamaan 1)</li>
+                        <li><strong>Pada Balok 2:</strong> $W_2 - T = m_2 a \\implies 20 - T = 2a$ (Persamaan 2)</li>
+                    </ul>
+                    <p><strong>3. Selesaikan Sistem Persamaan:</strong></p>
+                    <p>Jumlahkan Persamaan 1 dan 2:</p>
+                    <ul>
+                        <li>$(T - 15) + (20 - T) = 3a + 2a$</li>
+                        <li>$5 = 5a \\implies a = 1$ m/s²</li>
+                    </ul>
+                    <p>Substitusikan nilai $a$ ke Persamaan 1 untuk mencari $T$:</p>
+                    <ul>
+                        <li>$T - 15 = 3 \\cdot (1) \\implies T = 15 + 3 = 18$ N.</li>
+                    </ul>
+                    <p>Jadi, percepatan sistem adalah **1 m/s²** dan tegangan tali adalah **18 N**.</p>
+                `
+            },
+            {
+                question: `<p>Sebuah benda bermassa 2 kg diletakkan di dalam lift. Lift bergerak ke atas dengan perlambatan 2 m/s². Jika percepatan gravitasi (g) adalah 10 m/s², tentukan gaya normal yang bekerja pada benda tersebut.</p>`,
+                options: [
+                    "20 N",
+                    "16 N",
+                    "24 N",
+                    "12 N"
+                ],
+                answer: "16 N",
+                discussion: `
+                    <h3>Pembahasan Soal 2</h3>
+                    <p><strong>1. Analisis Gerak dan Gaya:</strong></p>
+                    <ul>
+                        <li>Lift bergerak ke atas, tetapi mengalami **perlambatan**. Ini berarti arah percepatan ($a$) **ke bawah**.</li>
+                        <li>Gaya yang bekerja pada benda adalah gaya normal ($N$) ke atas dan gaya berat ($W$) ke bawah.</li>
+                    </ul>
+                    <p><strong>2. Terapkan Hukum II Newton ($\\Sigma F = ma$):</strong></p>
+                    <ul>
+                        <li>Gaya yang searah dengan percepatan (ke bawah) bernilai positif.
+                            <br> $ΣF = W - N = m a$
+                        </li>
+                        <li>$W = m g = 2 \\cdot 10 = 20$ N.</li>
+                        <li>$20 - N = 2 \\cdot (2)$</li>
+                        <li>$N = 20 - 4 = 16$ N.</li>
+                    </ul>
+                    <p>Jadi, gaya normal yang bekerja pada benda adalah **16 N**.</p>
+                `
+            },
+            {
+                question: `<p>Sebuah benda bermassa 2 kg diletakkan di atas sebuah meja putar yang berputar dengan frekuensi 0,5 putaran/detik. Jari-jari lintasan benda adalah 40 cm. Agar benda tidak bergeser dari posisinya, tentukan koefisien gesek statis minimum yang diperlukan antara benda dan meja. (Gunakan $π^2 = 10$).</p>`,
+                options: [
+                    "0,4",
+                    "0,2",
+                    "0,8",
+                    "0,5"
+                ],
+                answer: "0,4",
+                discussion: `
+                    <h3>Pembahasan Soal 3</h3>
+                    <p><strong>1. Identifikasi Konsep Fisika:</strong></p>
+                    <ul>
+                        <li>Gaya sentripetal ($F_s$) yang mempertahankan benda pada lintasan melingkar disediakan oleh gaya gesek statis ($f_s$).</li>
+                        <li>Kondisi agar tidak bergeser: $f_{s,maks} = F_s$.</li>
+                    </ul>
+                    <p><strong>2. Hitung Gaya Sentripetal ($F_s$):</strong></p>
+                    <ul>
+                        <li>Frekuensi ($f$) = 0,5 putaran/detik.</li>
+                        <li>Kecepatan sudut: $\\omega = 2\\pi f = 2\\pi(0,5) = \\pi$ rad/s.</li>
+                        <li>Jari-jari ($r$) = 40 cm = 0,4 m.</li>
+                        <li>$F_s = m \\omega^2 r = 2 \\cdot (\\pi)^2 \\cdot (0,4) = 2 \\cdot 10 \\cdot 0,4 = 8$ N.</li>
+                    </ul>
+                    <p><strong>3. Hitung Koefisien Gesek Statis ($\mu_s$):</strong></p>
+                    <ul>
+                        <li>Gaya gesek statis maksimum: $f_{s,maks} = \\mu_s N$.</li>
+                        <li>Gaya normal ($N$) = Gaya berat ($W$) = $m g = 2 \\cdot 10 = 20$ N.</li>
+                        <li>$\\mu_s N = F_s \\implies \\mu_s \\cdot 20 = 8$.</li>
+                        <li>$\\mu_s = 8 / 20 = 0,4$.</li>
+                    </ul>
+                    <p>Jadi, koefisien gesek statis minimum yang diperlukan adalah **0,4**.</p>
+                `
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        const quizContainer = document.getElementById('quiz-container');
+        const finalMessage = document.getElementById('final-message');
+
+        function renderQuestion() {
+            const questionData = quizData[currentQuestionIndex];
+            const quizCard = document.createElement('div');
+            quizCard.className = 'quiz-card active';
+            quizCard.innerHTML = `
+                <div class="question">${questionData.question}</div>
+                <ul class="options-list">
+                    ${questionData.options.map((option, index) => `<li class="option-item" data-index="${index}">${option}</li>`).join('')}
+                </ul>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="submit-btn">Cek Jawaban</button>
+                    <button class="btn btn-secondary" id="discussion-btn" style="display:none;">Lihat Pembahasan</button>
+                    <button class="btn btn-primary" id="next-btn" style="display:none;">Soal Berikutnya</button>
+                </div>
+                <div id="pembahasan-section" style="display:none;">${questionData.discussion}</div>
+            `;
+
+            quizContainer.innerHTML = '';
+            quizContainer.appendChild(quizCard);
+
+            const optionsList = quizCard.querySelector('.options-list');
+            optionsList.addEventListener('click', (event) => {
+                if (event.target.classList.contains('option-item')) {
+                    optionsList.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
+                    event.target.classList.add('selected');
+                }
+            });
+
+            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            document.getElementById('discussion-btn').addEventListener('click', showDiscussion);
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+            
+            // Render MathJax formulas
+            MathJax.typesetPromise();
+        }
+
+        function checkAnswer() {
+            const selectedOption = document.querySelector('.option-item.selected');
+            if (!selectedOption) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            const isCorrect = selectedOption.textContent === quizData[currentQuestionIndex].answer;
+            
+            selectedOption.classList.remove('selected');
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+            } else {
+                selectedOption.classList.add('incorrect');
+                const correctOption = Array.from(document.querySelectorAll('.option-item')).find(item => item.textContent === quizData[currentQuestionIndex].answer);
+                correctOption.classList.add('correct');
+            }
+
+            document.querySelectorAll('.option-item').forEach(item => item.style.pointerEvents = 'none');
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('discussion-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+        
+        function showDiscussion() {
+            const pembahasanSection = document.getElementById('pembahasan-section');
+            pembahasanSection.style.display = 'block';
+            MathJax.typesetPromise([pembahasanSection]);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                renderQuestion();
+            } else {
+                quizContainer.style.display = 'none';
+                finalMessage.style.display = 'block';
+            }
+        }
+
+        // Start the quiz
+        renderQuestion();
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Materi Pengukuran - Fisika SMA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fcfffd;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --text:#0f172a;
+      --accent:#0ea5e9;
+      --accent-2:#60a5fa;
+      --good:#10b981;
+      --radius:14px;
+      --glass: rgba(14,165,233,0.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto; background:var(--bg); color:var(--text);}
+    header{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:20px 16px}
+    .nav{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:#fff;color:var(--accent);display:grid;place-items:center;font-weight:700}
+    .nav a{color:rgba(255,255,255,.95);text-decoration:none;margin-left:16px;font-weight:600}
+
+    main{max-width:1100px;margin:26px auto;padding:0 16px}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 8px 24px rgba(2,6,23,.06)}
+    .title{font-size:26px;margin:0 0 6px}
+    .subtitle{color:var(--muted);margin:0 0 12px}
+
+    /* video */
+    .video-wrap{border-radius:12px;overflow:hidden;border:1px solid rgba(15,23,42,.06)}
+    iframe{width:100%;height:210px;border:0}
+
+    /* sections */
+    section{margin-top:18px}
+    h3{margin:0 0 10px}
+    p{margin:0 0 10px;color:var(--muted)}
+
+    /* two column detail */
+    .grid-2{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    @media (max-width:980px){.hero,.grid-2{grid-template-columns:1fr} iframe{height:200px}}
+
+    /* component: measuring tools */
+    .tool{display:flex;gap:14px;align-items:flex-start}
+    .tool svg{width:60px;height:60px;flex:0 0 60px}
+    .spec{font-size:14px;color:var(--muted)}
+
+    /* steps */
+    .steps{margin-top:8px}
+    .step{display:flex;gap:10px;margin-bottom:8px}
+    .step .num{width:34px;height:34px;border-radius:8px;background:var(--glass);display:grid;place-items:center;font-weight:700;color:var(--accent)}
+
+    /* formula box */
+    .formula{background:linear-gradient(90deg, rgba(96,165,250,.06), rgba(14,165,233,.03));padding:12px;border-radius:10px;color:var(--text);font-weight:600}
+
+    /* example table */
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{padding:8px;border:1px solid rgba(15,23,42,.06);text-align:left}
+
+    /* interactive calculator */
+    .calc{display:flex;gap:8px;flex-wrap:wrap}
+    .calc input{padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,.08);width:120px}
+    .btn{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+
+    footer{max-width:1100px;margin:40px auto;padding:16px;color:var(--muted);font-size:14px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand"><div class="logo">F</div><div>
+        <div style="font-weight:700">Belajar Fisika SMA</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.9)">Materi: Pengukuran</div>
+      </div></div>
+      <nav>
+        <a href="index.html">Beranda</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="card">
+        <h1 class="title">Pengukuran & Alat Ukur Presisi</h1>
+        <p class="subtitle">Panduan lengkap: angka penting, ketidakpastian, jangka sorong (vernier), dan micrometer sekrup — disusun sesuai silabus SMA (Kurikulum Merdeka) dengan acuan materi Cambridge.</p>
+
+        <section>
+          <h3>Apa yang akan dipelajari</h3>
+          <ul style="margin:8px 0 0;padding-left:18px;color:var(--muted)">
+            <li>Besaran pokok & satuan SI</li>
+            <li>Angka penting & aturan pembulatan</li>
+            <li>Analisis ketidakpastian (galat) sederhana</li>
+            <li>Penggunaan Jangka Sorong (Vernier Calliper)</li>
+            <li>Penggunaan Mikrometer Sekrup (Micrometer Screw Gauge)</li>
+            <li>Contoh pengukuran, latihan langkah demi langkah</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Ringkasan Singkat</h3>
+          <p>Semua pengukuran harus melaporkan nilai dan ketidakpastian. Gunakan angka penting untuk menunjukkan keakuratan alat ukur. Contoh: 12,30 cm menunjukkan 4 angka penting.</p>
+          <div class="formula">Contoh: v = Δs / Δt — lakukan analisis dimensi bila perlu.</div>
+        </section>
+
+        <section>
+          <h3>Latihan cepat</h3>
+          <p>Ukur sebuah batang dengan jangka sorong: baca skala utama & vernier, catat nilai dan tentukan angka penting.</p>
+          <button class="btn" onclick="document.getElementById('vernier').scrollIntoView({behavior:'smooth'})">Mulai Latihan Jangka Sorong</button>
+        </section>
+      </div>
+
+      <aside class="card">
+        <h3 style="margin-top:0">Video Pembelajaran</h3>
+        <p class="spec">Dua video referensi (ganti VIDEO_ID dengan video YouTube yang relevan jika ingin menautkan):</p>
+        <div class="video-wrap" style="margin-bottom:10px">
+          <!-- Ganti VIDEO_ID di src dengan id video YouTube yang relevan -->
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Video Jangka Sorong" allowfullscreen></iframe>
+        </div>
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Video Mikrometer" allowfullscreen></iframe>
+        </div>
+      </aside>
+    </div>
+
+    <!-- DETAIL JANGKA SORONG -->
+    <div class="grid-2" style="margin-top:18px">
+      <div class="card" id="vernier">
+        <h3>Jangka Sorong (Vernier Calliper)</h3>
+          <img style="width: 40%;" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFiwwbkrK5-UKX6fDQY-6PhxkOoDgxzVBeTxEchEihq5XTVvtX9rMvoPrZvzfDB2O4MIh4xWG3rFeqvHZK8rGlaIds0wLyD-gQUL4VLKdEqOp9wOJ_FY62dK8_7_HiqitylC4ou1Cuaxcr/s1600/gambar+bagian-bagian+jangka+sorong.jpg" alt="">
+        
+        <p class="spec">Jangka sorong dapat mengukur panjang luar, panjang dalam, dan kedalaman. Ketelitian umum: 0,02 mm atau 0,05 mm (tergantung vernier).</p>
+
+        <div class="tool">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="44" height="8" rx="1" fill="#60a5fa"/><rect x="6" y="22" width="44" height="6" rx="1" fill="#3b82f6"/><rect x="6" y="30" width="44" height="20" rx="2" fill="#e6f6ff" stroke="#cfeefe"/></svg>
+          <div>
+            <p class="spec">Komponen utama: rahang utama (untuk luar), rahang dalam (untuk dalam), kedalaman probe, skala utama (mm), skala vernier.</p>
+            <div class="steps">
+              <div class="step"><div class="num">1</div><div>Pastikan nol jangka sorong sejajar pada posisi tertutup (kalibrasi nol).</div></div>
+              <div class="step"><div class="num">2</div><div>Buka rahang, posisikan benda, kencangkan sekrup pengunci.</div></div>
+              <div class="step"><div class="num">3</div><div>Baca nilai pada skala utama (mm) dan tambahkan nilai skala vernier yang sejajar.</div></div>
+              <div class="step"><div class="num">4</div><div>Tulis hasil dan tentukan angka penting serta ketidakpastian (± half of least count).</div></div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="margin-top:12px">Contoh Perhitungan</h4>
+        <p class="spec">Skala utama menunjukkan 12 mm dan skala vernier menunjukkan 0,36 mm (jika lsb vernier 0,02 mm dan garis 18 sejajar → 0,36 mm).</p>
+        <table>
+          <tr><th>Langkah</th><th>Nilai</th></tr>
+          <tr><td>Skala utama</td><td>12,00 mm</td></tr>
+          <tr><td>Skala vernier</td><td>0,36 mm</td></tr>
+          <tr><td>Nilai total</td><td>12,36 mm</td></tr>
+          <tr><td>Ketelitian (±)</td><td>±0,02 mm</td></tr>
+        </table>
+
+        <div style="margin-top:10px">
+          <button class="btn" onclick="document.getElementById('micrometer').scrollIntoView({behavior:'smooth'})">Lanjut ke Mikrometer</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Ringkasan Angka Penting & Ketidakpastian</h3>
+        <p class="spec">Aturan singkat: pada penjumlahan/pengurangan, gunakan jumlah angka desimal terkecil; pada perkalian/pembagian, gunakan jumlah angka penting terkecil.</p>
+        <div class="formula" style="margin-top:8px">Contoh: (12,36 ± 0,02) mm → angka penting 4.</div>
+
+        <h4 style="margin-top:12px">Mode Pelaporan</h4>
+        <p class="spec">Selalu laporkan: nilai ± ketidakpastian (satuan). Contoh: 12,36 ± 0,02 mm.</p>
+
+        <h4 style="margin-top:12px">Latihan singkat</h4>
+        <p class="spec">Jika skala utama menunjukkan 25 mm dan vernier menunjukkan 0,14 mm (lsb 0,02 mm), berapa nilai dan ketidakpastiannya?</p>
+        <button class="btn" onclick="alert('Jawaban: 25,14 ± 0,02 mm')">Lihat Jawaban</button>
+      </div>
+    </div>
+
+    <!-- MIKROMETER SEKUP -->
+    <section id="micrometer" style="margin-top:18px">
+      <div class="card">
+        <h3>Mikrometer Sekrup (Micrometer Screw Gauge)</h3>
+        <p class="spec">Mikrometer digunakan untuk mengukur ketebalan/diameter dengan ketelitian lebih tinggi (biasanya 0,01 mm atau 0,001 mm tergantung model).</p>
+
+        <div class="tool" style="margin-top:10px">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="20" width="52" height="10" rx="2" fill="#fde68a"/><rect x="6" y="30" width="52" height="14" rx="2" fill="#fff7ed" stroke="#fde3a6"/></svg>
+          <div>
+            <img style="width: 50%;"  src="data:image/jpeg;base64,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" alt="">
+            <p class="spec">Komponen: anvil, spindle, sleeve (skala utama), thimble (skala putar), ratchet.</p>
+            <div class="steps">
+              <div class="step"><div class="num">1</div><div>Pastikan mikrometer tertutup dan menunjukkan nol (kalibrasi).</div></div>
+              <div class="step"><div class="num">2</div><div>Tempatkan benda di antara anvil & spindle, putar thimble hingga kontak; gunakan ratchet untuk konsistensi.</div></div>
+              <div class="step"><div class="num">3</div><div>Baca skala utama (mm) pada sleeve dan tambah nilai pada thimble.</div></div>
+              <div class="step"><div class="num">4</div><div>Catat nilai dan ketelitian (mis. ±0,01 mm).</div></div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="margin-top:12px">Contoh Perhitungan Mikrometer</h4>
+        <p class="spec">Jika sleeve menunjukkan 5,0 mm dan thimble menunjukkan 0,28 mm (dengan least count 0,01 mm) maka ukuran = 5,28 ± 0,01 mm.</p>
+        <table>
+          <tr><th>Komponen</th><th>Nilai</th></tr>
+          <tr><td>Sleeve</td><td>5,00 mm</td></tr>
+          <tr><td>Thimble</td><td>0,28 mm</td></tr>
+          <tr><td>Total</td><td>5,28 mm</td></tr>
+          <tr><td>Ketelitian</td><td>±0,01 mm</td></tr>
+        </table>
+
+        <div style="margin-top:10px">
+          <button class="btn" onclick="document.getElementById('practice').scrollIntoView({behavior:'smooth'})">Latihan Interaktif</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICE -->
+    <section id="practice" style="margin-top:18px">
+      <div class="card">
+        <h3>Latihan Interaktif</h3>
+        <p class="spec">Masukkan pembacaan skala vernier (mm) dan micrometer (mm) kemudian tekan Hitung.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <div>
+            <label class="spec">Skala utama (mm)</label><br>
+            <input id="main" type="number" step="0.01" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,.06);width:120px">
+          </div>
+          <div>
+            <label class="spec">Skala vernier/thimble (mm)</label><br>
+            <input id="vernierVal" type="number" step="0.01" style="padding:8px;border-radius:8px;border:1px solid rgba(15,23,42,.06);width:120px">
+          </div>
+          <button class="btn" onclick="hitungVernier()">Hitung</button>
+        </div>
+        <p id="hasil" style="margin-top:10px;color:var(--muted)"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div style="max-width:1100px;margin:auto;text-align:center">© 2025 Belajar Fisika SMA • Pengukuran & Alat Ukur</div>
+  </footer>
+
+  <script>
+    function hitungVernier(){
+      const m = parseFloat(document.getElementById('main').value);
+      const v = parseFloat(document.getElementById('vernierVal').value);
+      if(isNaN(m) || isNaN(v)){ alert('Masukkan nilai skala utama dan vernier/thimble.'); return; }
+      const total = (m + v).toFixed(2);
+      document.getElementById('hasil').textContent = `Hasil pengukuran: ${total} mm (ketelitian sesuai alat, mis. ±0.02 mm).`;
+    }
+  </script>
+</body>
+</html>

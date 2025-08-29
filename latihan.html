@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Latihan Soal Akhir - Fisika (TKA/UN SMA)</title>
+  <link rel="icon" href="data:,"><!-- minimal -->
+  <style>
+    :root{
+      --bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#007ced;--glass:rgba(255,255,255,0.03);
+      --success:#16a34a;--danger:#ef4444;--card-radius:12px;
+      font-synthesis: none;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071028 0%, #07122a 60%);color:#e6eef8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+    .wrap{width:100%;max-width:980px}
+    header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2a9df4);display:flex;align-items:center;justify-content:center;font-weight:700;color:#021426;box-shadow:0 6px 18px rgba(2,20,38,0.6)}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted)}
+    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));padding:20px;border-radius:var(--card-radius);box-shadow:0 8px 30px rgba(2,12,22,0.6);}
+    .question-area{display:flex;gap:20px}
+    .q-left{flex:1}
+    .q-right{width:320px}
+    .question-box{padding:18px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03)}
+    .question-number{font-size:13px;color:var(--muted);margin-bottom:6px}
+    .question-text{font-size:18px;line-height:1.4}
+    .options{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+    .opt{padding:12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer}
+    .opt.selected{border-color:var(--accent);box-shadow:0 6px 18px rgba(0,124,237,0.12);}
+    .opt.correct{border-color:var(--success);background:linear-gradient(90deg,rgba(22,163,74,0.08),transparent)}
+    .opt.wrong{border-color:var(--danger);background:linear-gradient(90deg,rgba(239,68,68,0.06),transparent)}
+    .controls{display:flex;gap:8px;align-items:center;margin-top:14px}
+    button{background:var(--accent);border:none;color:white;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    button:disabled{opacity:0.45;cursor:not-allowed}
+    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:12px}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#00b0ff);width:0%}
+    .explain{margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);color:var(--muted);font-size:14px}
+    .final{display:none}
+    .result-big{font-size:36px;font-weight:700;color:var(--accent)}
+    .solutions{margin-top:12px}
+    pre{white-space:pre-wrap;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);color:#dbeafe}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .meta span{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:7px;font-size:13px;color:var(--muted)}
+    footer{margin-top:12px;color:var(--muted);font-size:13px}
+    @media(max-width:880px){.question-area{flex-direction:column}.q-right{width:100%}}
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">LP</div>
+      <div>
+        <h1>Latihan Soal Akhir — Fisika (TKA/UN SMA)</h1>
+        <p class="lead">10 soal tingkat sulit — pengukuran, mekanika, listrik, dan pemanasan global. Satu soal muncul per halaman; hitung skor dan lihat pembahasan lengkap.</p>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="question-area">
+        <div class="q-left">
+          <div class="question-box">
+            <div class="question-number" id="q-number">Soal 1 dari 10</div>
+            <div class="question-text" id="q-text">--</div>
+
+            <div class="options" id="opts"></div>
+
+            <div class="controls">
+              <button id="prevBtn" class="ghost">Sebelumnya</button>
+              <button id="nextBtn" disabled>Jawab & Lanjut</button>
+              <div style="flex:1"></div>
+              <div class="meta"><span id="timer">-</span><span id="q-hint">Ketelitian: bacalah penjelasan di akhir</span></div>
+            </div>
+
+            <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+
+            <div class="explain" id="explain" style="display:none"></div>
+          </div>
+        </div>
+
+        <div class="q-right">
+          <div class="question-box">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <strong>Ringkasan</strong>
+              <small id="status">Belum dijawab</small>
+            </div>
+            <p style="margin-top:8px;color:var(--muted)">Pilih jawaban terbaik, klik <em>Jawab & Lanjut</em>. Setelah semua soal selesai, Anda akan melihat skor dan pembahasan lengkap.</p>
+
+            <div style="margin-top:8px">
+              <strong>Skor Sementara:</strong>
+              <div style="margin-top:8px;font-size:20px" id="score">0 / 10</div>
+            </div>
+
+            <div style="margin-top:14px">
+              <button id="showAllBtn" class="ghost">Tampilkan Pembahasan Akhir</button>
+            </div>
+
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="question-box" style="text-align:center">
+            <strong>Progres</strong>
+            <div style="font-size:13px;color:var(--muted);margin-top:6px" id="progressText">0% selesai</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="final" id="finalScreen">
+        <div class="card" style="margin-top:16px;padding:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="color:var(--muted)">Hasil Akhir</div>
+              <div class="result-big" id="finalScore">0 / 10</div>
+              <div style="margin-top:6px;color:var(--muted)" id="percent">0%</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:13px;color:var(--muted)">Waktu selesai:</div>
+              <div id="timeEnd">-</div>
+            </div>
+          </div>
+
+          <div class="solutions" id="solutions"></div>
+
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+            <button id="retryBtn">Ulangi</button>
+            <button id="downloadBtn" class="ghost">Unduh HTML</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer></footer>
+  </div>
+
+  <script>
+    // Soal data (question, options, correct index, explanation - with detailed step-by-step)
+    const questions = [
+      {
+        q: 'Mikrometer sekrup: skala utama menunjukkan 5,5 mm dan skala putar menunjukkan 28 skala. Mikrometer ini mempunyai 50 skala pada putar (setara 0.01 mm per skala). Berapakah hasil pengukuran? (tulis dengan presisi yang sesuai)',
+        opts: ['5,78 mm','5,64 mm','5,28 mm','6,28 mm','5,84 mm'],
+        a: 0,
+        explain: `Pembahasan langkah-demi-langkah:\n1) Skala utama = 5,5 mm (ini membaca milimeter penuh dan setengah mm).\n2) Tiap skala putar = 1/50 mm = 0,01 mm.\n3) Skala putar = 28 \u00d7 0,01 mm = 0,28 mm.\n4) Total = 5,5 + 0,28 = 5,78 mm.\nCatatan: perhitungan digit-by-digit: 5,50 + 0,28 = 5,78.\nJadi jawaban: 5,78 mm (pilihan A).`}
+      ,
+      {
+        q: 'Jangka sorong: angka skala utama di sebelah kiri nol nonius adalah 13 mm, dan garis ke-7 nonius sejajar dengan skala utama. Ketelitian jangka sorong adalah 0,1 mm. Berapakah panjang benda?',
+        opts: ['13,7 mm','13,9 mm','14,0 mm','13,5 mm','14,7 mm'],
+        a: 0,
+        explain: `Pembahasan:\n1) Pembacaan utama = 13 mm.\n2) Ketelitian (nilai nonius per garis) = 1 mm - 0,9 mm = 0,1 mm.\n3) Garis nonius sejajar: nomor = 7 \u2192 tambahan = 7 \u00d7 0,1 = 0,7 mm.\n4) Total = 13 + 0,7 = 13,7 mm.\nJadi jawaban: 13,7 mm (A).`}
+      ,
+      {
+        q: 'Sebuah balok bermassa 10 kg ditarik oleh gaya 50 N yang membentuk sudut 37\u00b0 terhadap horizontal. Tentukan percepatan horizontal balok (g = 10 m/s^2, cos37 = 0,8).',
+        opts: ['3 m/s^2','4 m/s^2','5 m/s^2','6 m/s^2','8 m/s^2'],
+        a: 1,
+        explain: `Pembahasan:\n1) Komponen horizontal gaya: Fx = F cos 37\u00b0 = 50 \u00d7 0,8 = 40 N.\n2) Percepatan a = Fx / m = 40 / 10 = 4 m/s^2.\n3) Hitungan digit-by-digit: 50 \u00d7 0,8 = 40. 40 / 10 = 4.\nJadi jawaban: 4 m/s^2 (B).`}
+      ,
+      {
+        q: 'Bidang miring licin: balok massa 5 kg pada sudut 30\u00b0. Tentukan percepatan balok pada bidang miring (g = 10 m/s^2).',
+        opts: ['2,5 m/s^2','3,5 m/s^2','4 m/s^2','5 m/s^2','6 m/s^2'],
+        a: 3,
+        explain: `Pembahasan:\n1) Percepatan di bidang miring licin = g sin30\u00b0.\n2) sin30 = 0,5. Maka a = 10 \u00d7 0,5 = 5 m/s^2.\n3) Perhitungan digit-by-digit: 10 \u00d7 0,5 = 5.\nJadi jawaban: 5 m/s^2 (D).`}
+      ,
+      {
+        q: 'Usaha & Energi: sebuah benda 2 kg dilempar vertikal ke atas dengan v_0 = 20 m/s. Tentukan ketinggian maksimum (g = 10 m/s^2).',
+        opts: ['15 m','20 m','25 m','30 m','40 m'],
+        a: 1,
+        explain: `Pembahasan:\nGunakan v^2 = v_0^2 - 2 g h (atau energi): h = v_0^2 / (2 g).\n1) v_0^2 = 20^2 = 400.\n2) 2g = 20.\n3) h = 400 / 20 = 20 m.\nPerhitungan digit-by-digit: 400 / 20 = 20.\nJadi jawaban: 20 m (B).`}
+      ,
+      {
+        q: 'Hukum Coulomb: dua muatan q1 = +2 \u03bcC dan q2 = +6 \u03bcC dipisahkan sejauh 3 cm di udara. Tentukan besar gaya Coulomb antar keduanya. Gunakan k = 9\u00d710^9 N m^2/C^2.',
+        opts: ['120 N','360 N','400 N','600 N','1200 N'],
+        a: 0,
+        explain: `Pembahasan:\nGunakan F = k q1 q2 / r^2.\n1) q1 q2 = (2\u00d710^{-6}) (6\u00d710^{-6}) = 12\u00d710^{-12} C^2.\n2) r = 3 cm = 0,03 m. r^2 = 0,0009 m^2.\n3) F = 9\u00d710^9 * (12\u00d710^{-12}) / 0,0009.\n   = 9\u00d710^9 * (12/0,0009)\u00d7 10^{-12}.\n   Hitung bagian dalam: 12 / 0,0009 = 12 / 9e-4 = (12/9) \u00d7 10^4 = 1,333... \u00d7 10^4.\n   Maka F = 9\u00d710^9 \u00d7 1,333...\u00d710^4 \u00d7 10^{-12} = 9 \u00d7 1,333... \u00d7 10^{1} = 12 \u00d7 10^{1} = 120 N.\nPerhitungan digit-by-digit di akhir memberi 120 N.\nJadi jawaban: 120 N (A).`}
+      ,
+      {
+        q: 'Listrik DC: kawat tembaga panjang 10 m, luas penampang 1 mm^2, hambatan jenis \u03c1 = 1,7\u00d710^{-8} \u03a9 m. Tentukan hambatan kawat.',
+        opts: ['0,1 \u03a9','0,17 \u03a9','0,5 \u03a9','0,07 \u03a9','0,34 \u03a9'],
+        a: 1,
+        explain: `Pembahasan:\nR = \u03c1 L / A.\n1) L = 10 m. A = 1 mm^2 = 1\u00d710^{-6} m^2.\n2) R = 1,7\u00d710^{-8} \u00d7 (10 / 1\u00d710^{-6}) = 1,7\u00d710^{-8} \u00d7 10^7 = 1,7 \u00d7 10^{-1} = 0,17 \u03a9.\nJadi jawaban: 0,17 \u03a9 (B).`}
+      ,
+      {
+        q: 'Rangkaian: R1 = 6 \u03a9 diseri dengan gabungan paralel R2 = 3 \u03a9 dan R3 = 6 \u03a9. Tentukan hambatan total.',
+        opts: ['6 \u03a9','7 \u03a9','8 \u03a9','9 \u03a9','10 \u03a9'],
+        a: 2,
+        explain: `Pembahasan:\n1) R2 dan R3 paralel: R23 = (R2 R3)/(R2+R3) = (3\u00d76)/(3+6) = 18/9 = 2 \u03a9.\n2) R_total = R1 + R23 = 6 + 2 = 8 \u03a9.\nJadi jawaban: 8 \u03a9 (C).`}
+      ,
+      {
+        q: 'Listrik dinamis (Hukum Ohm): arus 2 A mengalir pada hambatan 12 \u03a9. Tentukan tegangan sumber V.',
+        opts: ['12 V','20 V','24 V','30 V','48 V'],
+        a: 2,
+        explain: `Pembahasan:\nV = I R = 2 \u00d7 12 = 24 V.\nJadi jawaban: 24 V (C).`}
+      ,
+      {
+        q: 'Pemanasan Global: mekanisme utama yang menyebabkan peningkatan suhu global adalah...',
+        opts: ['Peningkatan jumlah nitrogen di atmosfer','Efek rumah kaca oleh gas CO2, CH4, N2O','Penurunan konsentrasi ozon di atmosfer','Penurunan uap air di atmosfer','Penyerapan energi matahari oleh ion atmosfer'],
+        a: 1,
+        explain: `Pembahasan singkat:\nPeningkatan konsentrasi gas rumah kaca seperti CO2, CH4, dan N2O meningkatkan penyerapan radiasi inframerah yang dipancarkan Bumi, sehingga meningkatkan energi rata-rata yang tersimpan di atmosfer dan permukaan Bumi. Ini dikenal sebagai efek rumah kaca dan merupakan mekanisme utama pemanasan global. (Pilihan B).`}
+    ];
+
+    // state
+    let idx = 0; let score = 0; let answers = Array(questions.length).fill(null);
+    const qNumber = document.getElementById('q-number');
+    const qText = document.getElementById('q-text');
+    const optsDiv = document.getElementById('opts');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const explainDiv = document.getElementById('explain');
+    const status = document.getElementById('status');
+    const scoreDiv = document.getElementById('score');
+    const bar = document.getElementById('bar');
+    const progressText = document.getElementById('progressText');
+    const finalScreen = document.getElementById('finalScreen');
+    const finalScore = document.getElementById('finalScore');
+    const percent = document.getElementById('percent');
+    const solutionsDiv = document.getElementById('solutions');
+    const showAllBtn = document.getElementById('showAllBtn');
+    const retryBtn = document.getElementById('retryBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    function render(){
+      const Q = questions[idx];
+      qNumber.textContent = `Soal ${idx+1} dari ${questions.length}`;
+      qText.innerHTML = Q.q.replace(/\\n/g,'<br>');
+      optsDiv.innerHTML = '';
+      Q.opts.forEach((o,i)=>{
+        const btn = document.createElement('button');
+        btn.className='opt'; btn.type='button'; btn.innerHTML = `<strong>${String.fromCharCode(65+i)}.</strong> ${o}`;
+        btn.onclick = ()=> select(i, btn);
+        // mark if already answered
+        if(answers[idx] !== null){
+          btn.classList.add('selected');
+        }
+        optsDiv.appendChild(btn);
+      });
+
+      // update controls
+      prevBtn.disabled = idx===0;
+      nextBtn.disabled = answers[idx]===null;
+      explainDiv.style.display = 'none';
+      status.textContent = answers[idx]===null ? 'Belum dijawab' : (answers[idx]===Q.a ? 'Jawaban benar' : 'Jawaban salah');
+      updateProgress();
+    }
+
+    function select(i, btn){
+      // clear selection style for opts
+      const btns = optsDiv.querySelectorAll('.opt');
+      btns.forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      answers[idx] = i;
+      nextBtn.disabled = false;
+    }
+
+    prevBtn.addEventListener('click', ()=>{
+      if(idx>0) idx--;
+      render();
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      // lock answer, show explanation for current
+      const Q = questions[idx];
+      const ans = answers[idx];
+      const btns = optsDiv.querySelectorAll('.opt');
+      btns.forEach((b,i)=>{
+        b.classList.remove('correct','wrong');
+        if(i===Q.a) b.classList.add('correct');
+        if(i===ans && ans!==Q.a) b.classList.add('wrong');
+      });
+      // update score only once per question
+      if(ans === Q.a){
+        // increment score only first time answered correctly
+        // to avoid double counting when revisiting, compute score from scratch later
+      }
+      // show explanation
+      explainDiv.style.display = 'block';
+      explainDiv.innerHTML = `<strong>Pembahasan:</strong><br><pre>${Q.explain}</pre>`;
+
+      // compute score fresh
+      score = answers.reduce((acc,a,i)=> acc + (a===questions[i].a ? 1:0),0);
+      scoreDiv.textContent = `${score} / ${questions.length}`;
+      // mark status
+      status.textContent = answers[idx]===null ? 'Belum dijawab' : (answers[idx]===Q.a ? 'Jawaban benar' : 'Jawaban salah');
+
+      // move to next automatically after short delay OR wait for user -> we'll wait user to click next to go on
+      // change next button to "Lanjutkan" after answer
+      nextBtn.textContent = idx < questions.length-1 ? 'Lanjutkan' : 'Selesai & Tunjukkan Hasil';
+
+      // if last question and user clicks again, show final
+      if(idx < questions.length-1){
+        // preserve current answered state then wait user to click "Lanjutkan"
+        nextBtn.onclick = ()=>{ idx++; render(); nextBtn.textContent='Jawab & Lanjut'; nextBtn.onclick = null; };
+      } else {
+        nextBtn.onclick = finish;
+      }
+    });
+
+    function updateProgress(){
+      const done = answers.filter(a=>a!==null).length;
+      const pct = Math.round(done / questions.length * 100);
+      bar.style.width = pct + '%';
+      progressText.textContent = pct + '% selesai';
+      document.getElementById('progressText').textContent = pct + '% selesai';
+      document.getElementById('score').textContent = `${score} / ${questions.length}`;
+    }
+
+    function finish(){
+      // ensure all answered (if not, still show results but mark unanswered)
+      const now = new Date();
+      finalScreen.style.display = 'block';
+      // compute score
+      score = answers.reduce((acc,a,i)=> acc + (a===questions[i].a ? 1:0),0);
+      finalScore.textContent = `${score} / ${questions.length}`;
+      percent.textContent = Math.round(score/questions.length*100) + '%';
+      document.getElementById('timeEnd').textContent = now.toLocaleString();
+      // build solutions
+      solutionsDiv.innerHTML = '<h3>Pembahasan Lengkap & Perhitungan</h3>';
+      questions.forEach((Q,i)=>{
+        const user = answers[i]===null ? 'Belum memilih' : String.fromCharCode(65+answers[i]);
+        const correct = String.fromCharCode(65+Q.a);
+        const el = document.createElement('div');
+        el.style.marginTop='10px';
+        el.innerHTML = `<strong>Soal ${i+1} — Jawaban Anda: ${user} — Jawaban benar: ${correct}</strong><pre>${Q.explain}</pre>`;
+        solutionsDiv.appendChild(el);
+      });
+      // scroll to final
+      finalScreen.scrollIntoView({behavior:'smooth'});
+    }
+
+    showAllBtn.addEventListener('click', finish);
+    retryBtn.addEventListener('click', ()=>location.reload());
+    downloadBtn.addEventListener('click', ()=>{
+      const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'latihan_soal_akhir.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // initial render
+    render();
+
+    // small usability: allow selecting option by clicking label once; enabling next
+    optsDiv.addEventListener('click', (e)=>{
+      // if click on option button while it's been already selected and nextBtn text is 'Lanjutkan' - go next
+    });
+
+    // Accessibility: keyboard navigation
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight'){
+        if(!nextBtn.disabled) nextBtn.click();
+      } else if(e.key === 'ArrowLeft'){
+        if(!prevBtn.disabled) prevBtn.click();
+      }
+    });
+
+  </script>
+</body>
+</html>

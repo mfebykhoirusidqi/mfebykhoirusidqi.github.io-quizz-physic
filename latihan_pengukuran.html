@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan Pengukuran - Fisika SMA</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9fafb;
+      color: #1f2937;
+    }
+    header {
+      background: linear-gradient(90deg, #3b82f6, #06b6d4);
+      padding: 20px;
+      text-align: center;
+      color: white;
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    .question-card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+    .question-card:hover {
+      transform: scale(1.02);
+    }
+    h3 {
+      color: #2563eb;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 1em;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    .answer {
+      display: none;
+      margin-top: 15px;
+      padding: 10px;
+      background: #f1f5f9;
+      border-left: 5px solid #3b82f6;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>Latihan Pengukuran Fisika SMA</header>
+  <div class="container">
+
+    <div class="question-card">
+      <h3>Soal 1: Mikrometer Sekrup</h3>
+      <p>Sebuah mikrometer sekrup menunjukkan angka utama 5,5 mm dan skala putar menunjukkan 35 garis. Hitung hasil pengukuran dalam mm!</p>
+      <button onclick="toggleAnswer('ans1')">Lihat Pembahasan</button>
+      <div class="answer" id="ans1">
+        <p>Skala utama = 5,5 mm, skala putar = 35 × 0,01 mm = 0,35 mm. <br>
+        Total pengukuran = 5,5 + 0,35 = <b>5,85 mm</b>.</p>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <h3>Soal 2: Jangka Sorong</h3>
+      <p>Sebuah jangka sorong menunjukkan skala utama 12,4 cm dan skala nonius sejajar pada garis ke-7 (0,07 cm). Tentukan hasil pengukuran dalam cm!</p>
+      <button onclick="toggleAnswer('ans2')">Lihat Pembahasan</button>
+      <div class="answer" id="ans2">
+        <p>Skala utama = 12,4 cm, skala nonius = 0,07 cm. <br>
+        Total = 12,4 + 0,07 = <b>12,47 cm</b>.</p>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <h3>Soal 3: Angka Penting</h3>
+      <p>Hasil pengukuran sebuah benda adalah 0,004530 m. Tentukan jumlah angka pentingnya!</p>
+      <button onclick="toggleAnswer('ans3')">Lihat Pembahasan</button>
+      <div class="answer" id="ans3">
+        <p>0,004530 m memiliki angka penting <b>4</b> (angka nol di depan tidak dihitung, angka nol di belakang dihitung karena ada koma).</p>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <h3>Soal 4: Analisis Mikrometer</h3>
+      <p>Jika hasil pengukuran mikrometer 6,78 mm dan ketelitian alat 0,01 mm, tentukan persentase ketelitian alat tersebut!</p>
+      <button onclick="toggleAnswer('ans4')">Lihat Pembahasan</button>
+      <div class="answer" id="ans4">
+        <p>Persentase ketelitian = (0,01 / 6,78) × 100% ≈ <b>0,15%</b>.</p>
+      </div>
+    </div>
+
+    <div class="question-card">
+      <h3>Soal 5: Aplikasi Jangka Sorong</h3>
+      <p>Sebuah pipa berdiameter luar 3,28 cm dan diameter dalam 2,84 cm. Hitung ketebalan dinding pipa!</p>
+      <button onclick="toggleAnswer('ans5')">Lihat Pembahasan</button>
+      <div class="answer" id="ans5">
+        <p>Ketebalan = (3,28 - 2,84)/2 = <b>0,22 cm</b>.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleAnswer(id) {
+      const answer = document.getElementById(id);
+      answer.style.display = (answer.style.display === 'block') ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listrik Statis - Fisika Kelas 12 SMA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0077b6;
+      --secondary: #48cae4;
+      --bg: #f4f7f9;
+      --card: #fff;
+      --text: #333;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 40px 20px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .content-section {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      border-bottom: 3px solid var(--secondary);
+      padding-bottom: 10px;
+      color: var(--primary);
+    }
+
+    h3 {
+      font-size: 1.4em;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    p, ul, ol {
+      font-size: 1em;
+      margin-bottom: 15px;
+    }
+
+    strong {
+      color: var(--primary);
+    }
+
+    .formula {
+      display: block;
+      text-align: center;
+      margin: 20px 0;
+      font-size: 1.2em;
+      color: #d62828;
+      font-weight: bold;
+    }
+
+    img {
+      display: block;
+      margin: 20px auto;
+      border-radius: 10px;
+      width: 60%;
+      box-shadow: var(--shadow);
+    }
+
+    .soal-card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.2s ease;
+    }
+
+    .soal-card:hover {
+      transform: scale(1.02);
+    }
+
+    .soal-card h4 {
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .options-list li {
+      background: #f0f4f8;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .options-list li:hover {
+      background: #e6f0ff;
+    }
+
+    .pembahasan {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background: #eaf8ff;
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #005a8f;
+    }
+
+    /* Card Video & Simulasi */
+    .media-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .media-item {
+      flex: 1 1 300px;
+      background: var(--card);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+    }
+
+    .media-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .media-item iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+
+    .media-item a {
+      display: block;
+      text-align: center;
+      padding: 15px;
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Materi Listrik Statis</h1>
+      <p>Fisika Kelas 12 SMA</p>
+    </div>
+
+    <!-- Materi -->
+    <div class="content-section">
+      <h2>Apa Itu Listrik Statis ⚡</h2>
+      <p>Listrik statis adalah ketidakseimbangan muatan listrik pada permukaan benda. Contohnya, saat penggaris plastik digosokkan ke rambut lalu dapat menarik potongan kertas kecil. Fenomena ini terjadi karena perpindahan elektron antar benda.</p>
+
+      <h3>1. Muatan Listrik</h3>
+      <p>Benda tersusun dari proton (positif), elektron (negatif), dan neutron (netral). Muatan listrik:</p>
+      <ul>
+        <li><strong>Negatif:</strong> Jika benda kelebihan elektron.</li>
+        <li><strong>Positif:</strong> Jika benda kekurangan elektron.</li>
+        <li><strong>Netral:</strong> Jika jumlah proton dan elektron sama.</li>
+      </ul>
+      <img style="width: 50%;" src="https://asset.kompas.com/crops/QIzkfM7OURRkkCrUbN_KsoBD9D8=/0x0:2425x2425/375x240/data/photo/2020/04/20/5e9d6a3047e44.jpg" alt="Gambar Muatan Listrik">
+
+      <h3>2. Hukum Coulomb</h3>
+      <p>Besar gaya Coulomb:</p>
+      <p class="formula">\( F = k \frac{|q_1 q_2|}{r^2} \)</p>
+
+      <h3>3. Medan Listrik</h3>
+      <p class="formula">\( E = k \frac{|q|}{r^2} \)</p>
+
+      <h3>4. Potensial Listrik</h3>
+      <p class="formula">\( V = k \frac{q}{r} \)</p>
+
+      <h3>5. Kapasitas Kapasitor</h3>
+      <p class="formula">\( C = \frac{Q}{V} \quad \text{atau} \quad C = \epsilon_0 \frac{A}{d} \)</p>
+    </div>
+
+    <!-- Soal -->
+    <div class="content-section">
+      <h2>Contoh Soal & Pembahasan</h2>
+
+      <!-- Soal Card 1 -->
+      <div class="soal-card">
+        <h4>Soal 1</h4>
+        <p>Dua muatan \( q_1 = 2\mu C \) dan \( q_2 = 4\mu C \) dipisahkan sejauh 3 cm. Hitung gaya Coulomb!</p>
+        <ul class="options-list">
+          <li>A. 40 N</li><li>B. 60 N</li><li>C. 80 N</li><li>D. 100 N</li>
+        </ul>
+        <button class="btn" onclick="togglePembahasan('p1', this)">Lihat Pembahasan</button>
+        <div class="pembahasan" id="p1">
+          <p>\( F = k \frac{q_1 q_2}{r^2} = (9\times10^9)\frac{2\times10^{-6}\cdot4\times10^{-6}}{(0.03)^2} = 80 \,N\)</p>
+          <p><strong>Jawaban:</strong> C</p>
+        </div>
+      </div>
+
+      <!-- Tambahkan soal lainnya sesuai kebutuhan (Soal 2-5 dari kode awal) -->
+    </div>
+
+    <!-- Media -->
+    <div class="content-section">
+      <h2>Video & Simulasi Interaktif</h2>
+      <div class="media-card">
+        <div class="media-item">
+          <iframe src="https://www.youtube.com/embed/1T4wT1_99p0" allowfullscreen></iframe>
+          <a href="https://www.youtube.com/watch?v=1T4wT1_99p0" target="_blank">Tonton di YouTube</a>
+        </div>
+        <div class="media-item">
+          <iframe src="https://phet.colorado.edu/sims/html/charges-and-fields/latest/charges-and-fields_id.html"></iframe>
+          <a href="https://phet.colorado.edu/sims/html/charges-and-fields/latest/charges-and-fields_id.html" target="_blank">Buka Simulasi PhET</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePembahasan(id, btn) {
+      const pembahasan = document.getElementById(id);
+      if (pembahasan.style.display === "block") {
+        pembahasan.style.display = "none";
+        btn.textContent = "Lihat Pembahasan";
+      } else {
+        pembahasan.style.display = "block";
+        btn.textContent = "Sembunyikan Pembahasan";
+        MathJax.typesetPromise([pembahasan]);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Hukum Newton - Fisika Tingkat Sulit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #0077b6;
+            --secondary-color: #48cae4;
+            --success-color: #2a9d8f;
+            --danger-color: #e63946;
+            --light-bg: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--secondary-color);
+            font-weight: 400;
+        }
+
+        .quiz-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .quiz-card.active {
+            display: block;
+        }
+
+        .question {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .question p {
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            background-color: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #e6f0ff;
+        }
+
+        .option-item.correct {
+            background-color: var(--success-color);
+            color: var(--card-bg);
+            border-color: var(--success-color);
+        }
+
+        .option-item.incorrect {
+            background-color: var(--danger-color);
+            color: var(--card-bg);
+            border-color: var(--danger-color);
+        }
+
+        .option-item.correct::after {
+            content: '✓';
+            float: right;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .option-item.incorrect::after {
+            content: '×';
+            float: right;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--card-bg);
+        }
+
+        .btn-primary:hover {
+            background-color: #004b7c;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--card-bg);
+        }
+
+        .btn-secondary:hover {
+            background-color: #00b4d8;
+        }
+
+        #pembahasan-section {
+            background-color: #eaf8ff;
+            border-left: 5px solid var(--primary-color);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        #pembahasan-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        #pembahasan-section p, #pembahasan-section ul, #pembahasan-section li {
+            line-height: 1.6;
+            font-size: 1em;
+        }
+
+        .final-message {
+            text-align: center;
+            font-size: 1.8em;
+            color: var(--success-color);
+            display: none;
+            padding: 50px 0;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Kuis Hukum Newton</h1>
+            <p>Level Ujian Nasional & TKA Fisika</p>
+        </div>
+
+        <div id="quiz-container">
+            </div>
+
+        <div class="final-message" id="final-message">
+            🎉 Kuis Selesai! Selamat! 🎉
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: `<p>Sebuah balok bermassa 5 kg didorong ke atas bidang miring kasar dengan sudut kemiringan 37° terhadap horizontal oleh gaya konstan F=75 N. Jika koefisien gesek kinetik adalah 0,4 dan percepatan gravitasi g=10 m/s², berapakah percepatan balok tersebut?</p>`,
+                options: [
+                    "5,8 m/s²",
+                    "6,2 m/s²",
+                    "4,5 m/s²",
+                    "7,1 m/s²"
+                ],
+                answer: "5,8 m/s²",
+                discussion: `
+                    <h3>Pembahasan Soal 1</h3>
+                    <p>Percepatan dihitung menggunakan Hukum II Newton: $\\Sigma F_x = ma$.</p>
+                    <p>Gaya-gaya yang bekerja pada sumbu-x (sejajar bidang) adalah: gaya dorong ($F$), komponen gaya berat ($W_x$), dan gaya gesek kinetik ($f_k$).</p>
+                    <ul>
+                        <li>$F - W_x - f_k = ma$</li>
+                        <li>$75 - (mg \\sin 37^\\circ) - (\\mu_k mg \\cos 37^\\circ) = 5a$</li>
+                        <li>$75 - (5 \\cdot 10 \\cdot 0,6) - (0,4 \\cdot 5 \\cdot 10 \\cdot 0,8) = 5a$</li>
+                        <li>$75 - 30 - 16 = 5a$</li>
+                        <li>$29 = 5a \\implies a = 5,8$ m/s²</li>
+                    </ul>
+                    <p>Jadi, percepatan balok adalah <strong>5,8 m/s²</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Dua balok A dan B masing-masing bermassa $m_A = 2$ kg dan $m_B = 3$ kg terhubung oleh tali dan didorong oleh gaya $F$ seperti gambar. Jika gaya gesek diabaikan dan gaya kontak antara kedua balok adalah 12 N, berapakah besar gaya $F$?</p>`,
+                options: [
+                    "20 N",
+                    "15 N",
+                    "25 N",
+                    "12 N"
+                ],
+                answer: "20 N",
+                discussion: `
+                    <h3>Pembahasan Soal 2</h3>
+                    <p>Gaya kontak ($F_{kontak}$) pada balok B menyebabkan balok B mengalami percepatan. Dari Hukum II Newton pada balok B, kita dapat menemukan percepatan sistem.</p>
+                    <ul>
+                        <li>$F_{kontak} = m_B \\cdot a$</li>
+                        <li>$12 = 3 \\cdot a \\implies a = 4$ m/s²</li>
+                    </ul>
+                    <p>Selanjutnya, terapkan Hukum II Newton pada seluruh sistem (Balok A + Balok B) untuk mencari gaya $F$.</p>
+                    <ul>
+                        <li>$\\Sigma F = (m_A + m_B)a$</li>
+                        <li>$F = (2 + 3) \\cdot 4 = 5 \\cdot 4 = 20$ N</li>
+                    </ul>
+                    <p>Jadi, besar gaya F adalah <strong>20 N</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Sebuah sistem dua balok terhubung oleh tali melewati katrol licin, dengan balok bermassa $m_1 = 4$ kg diletakkan di atas meja licin dan balok bermassa $m_2 = 1$ kg digantung bebas. Berapakah tegangan tali saat sistem bergerak?</p>`,
+                options: [
+                    "8 N",
+                    "4 N",
+                    "10 N",
+                    "2 N"
+                ],
+                answer: "8 N",
+                discussion: `
+                    <h3>Pembahasan Soal 3</h3>
+                    <p>Gaya yang menyebabkan sistem bergerak adalah gaya berat dari balok $m_2$. Pertama, hitung percepatan sistem.</p>
+                    <ul>
+                        <li>$\\Sigma F_{sistem} = m_{total}a$</li>
+                        <li>$m_2 g = (m_1+m_2)a$</li>
+                        <li>$1 \\cdot 10 = (4+1)a \\implies 10 = 5a \\implies a = 2$ m/s²</li>
+                    </ul>
+                    <p>Kemudian, gunakan Hukum II Newton pada balok $m_1$ untuk mencari tegangan tali.</p>
+                    <ul>
+                        <li>$\\Sigma F_1 = m_1 a$</li>
+                        <li>$T = 4 \\cdot 2 = 8$ N</li>
+                    </ul>
+                    <p>Jadi, tegangan tali adalah <strong>8 N</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Sebuah benda bermassa 3 kg diletakkan di dalam lift. Lift bergerak ke atas dengan percepatan 2 m/s². Jika percepatan gravitasi g=10 m/s², berapakah gaya normal yang bekerja pada benda?</p>`,
+                options: [
+                    "36 N",
+                    "24 N",
+                    "30 N",
+                    "6 N"
+                ],
+                answer: "36 N",
+                discussion: `
+                    <h3>Pembahasan Soal 4</h3>
+                    <p>Ketika lift bergerak ke atas dengan percepatan, gaya normal ($N$) lebih besar dari gaya berat ($W$).</p>
+                    <ul>
+                        <li>$\\Sigma F = ma \\implies N - W = ma$</li>
+                        <li>$N = W + ma = mg + ma = m(g+a)$</li>
+                        <li>$N = 3 (10 + 2) = 3 \\cdot 12 = 36$ N</li>
+                    </ul>
+                    <p>Jadi, gaya normal yang bekerja pada benda adalah <strong>36 N</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Seorang anak bermassa 50 kg berada di dalam lift. Lift tersebut bergerak dari lantai bawah ke lantai atas. Pada 2 detik pertama, lift bergerak ke atas dari keadaan diam dengan percepatan konstan dan tali lift memberikan tegangan sebesar 600 N. Tentukanlah ketinggian yang dicapai lift setelah 2 detik tersebut.</p>`,
+                options: [
+                    "5 m",
+                    "2 m",
+                    "4 m",
+                    "10 m"
+                ],
+                answer: "4 m",
+                discussion: `
+                    <h3>Pembahasan Soal 5</h3>
+                    <p>Pertama, hitung percepatan lift dari Hukum II Newton: $\\Sigma F = ma$, di mana $\\Sigma F = T - W$.</p>
+                    <ul>
+                        <li>$a = \\frac{T - W}{m} = \\frac{600 - (50\\cdot 10)}{50} = \\frac{100}{50} = 2$ m/s²</li>
+                    </ul>
+                    <p>Kemudian, gunakan rumus kinematika gerak lurus berubah beraturan ($y = v_0 t + \\frac{1}{2} at^2$) untuk mencari ketinggian.</p>
+                    <ul>
+                        <li>$y = 0 \\cdot 2 + \\frac{1}{2} (2) (2)^2 = 4$ m.</li>
+                    </ul>
+                    <p>Jadi, ketinggian yang dicapai lift adalah <strong>4 m</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Sebuah benda bermassa m digantung pada tali dan diayunkan dalam lintasan lingkaran horizontal dengan jari-jari R. Tali membentuk sudut θ dengan vertikal. Berapakah tegangan tali pada ayunan tersebut?</p>`,
+                options: [
+                    "$mg / \\sin\\theta$",
+                    "$mg / \\tan\\theta$",
+                    "$mg / \\cos\\theta$",
+                    "$mg \\tan\\theta$"
+                ],
+                answer: "$mg / \\cos\\theta$",
+                discussion: `
+                    <h3>Pembahasan Soal 6</h3>
+                    <p>Pada ayunan konikal, tegangan tali ($T$) diuraikan menjadi komponen vertikal dan horizontal. Komponen vertikal ($T_y$) harus mengimbangi gaya berat ($W$), dan komponen horizontal ($T_x$) menyediakan gaya sentripetal ($F_s$).</p>
+                    <ul>
+                        <li>$T_y = T \\cos\\theta = W = mg$</li>
+                        <li>$T = \\frac{mg}{\\cos\\theta}$</li>
+                    </ul>
+                    <p>Jadi, tegangan tali adalah <strong>$mg / \\cos\\theta$</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Sebuah mobil bermassa $m = 1000$ kg berbelok pada tikungan datar dengan jari-jari $R=25$ m. Jika koefisien gesek statis antara ban dan jalan adalah $\\mu_s = 0,4$, berapakah kecepatan maksimum mobil agar tidak selip?</p>`,
+                options: [
+                    "10 m/s",
+                    "20 m/s",
+                    "15 m/s",
+                    "5 m/s"
+                ],
+                answer: "10 m/s",
+                discussion: `
+                    <h3>Pembahasan Soal 7</h3>
+                    <p>Gaya sentripetal ($F_s$) yang menjaga mobil tetap pada lintasan melingkar disediakan oleh gaya gesek statis ($f_s$). Kondisi agar tidak selip adalah gaya sentripetal harus lebih kecil atau sama dengan gaya gesek statis maksimum ($F_s \\le f_{s, maks}$).</p>
+                    <ul>
+                        <li>$\\frac{mv^2}{R} = \\mu_s N$</li>
+                        <li>$\\frac{mv^2}{R} = \\mu_s mg$</li>
+                        <li>$v_{maks} = \\sqrt{\\mu_s g R}$</li>
+                        <li>$v_{maks} = \\sqrt{0,4 \\cdot 10 \\cdot 25} = \\sqrt{100} = 10$ m/s</li>
+                    </ul>
+                    <p>Jadi, kecepatan maksimum mobil agar tidak selip adalah <strong>10 m/s</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Tiga balok $m_1=2$ kg, $m_2=3$ kg, dan $m_3=5$ kg berada di atas bidang licin dan didorong oleh gaya $F$ sehingga ketiganya bergerak bersama dengan percepatan $a$. Jika gaya kontak antara $m_1$ dan $m_2$ adalah $F_{12}=15$ N, berapakah besar gaya $F$?</p>`,
+                options: [
+                    "18,75 N",
+                    "40 N",
+                    "50 N",
+                    "30 N"
+                ],
+                answer: "18,75 N",
+                discussion: `
+                    <h3>Pembahasan Soal 8</h3>
+                    <p>Percepatan sistem dapat dihitung dari gaya kontak $F_{12}$, yang mendorong balok $m_2$ dan $m_3$.</p>
+                    <ul>
+                        <li>$F_{12} = (m_2+m_3)a$</li>
+                        <li>$15 = (3+5)a \\implies 15 = 8a \\implies a = 1,875$ m/s²</li>
+                    </ul>
+                    <p>Selanjutnya, gunakan Hukum II Newton pada seluruh sistem untuk mencari gaya $F$.</p>
+                    <ul>
+                        <li>$F = (m_1+m_2+m_3)a$</li>
+                        <li>$F = (2+3+5)(1,875) = 10(1,875) = 18,75$ N</li>
+                    </ul>
+                    <p>Jadi, besar gaya F adalah <strong>18,75 N</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Sebuah benda bermassa 2 kg diletakkan di dalam lift. Lift bergerak ke atas dengan perlambatan 2 m/s². Jika percepatan gravitasi (g) adalah 10 m/s², tentukan gaya normal yang bekerja pada benda tersebut.</p>`,
+                options: [
+                    "16 N",
+                    "24 N",
+                    "20 N",
+                    "12 N"
+                ],
+                answer: "16 N",
+                discussion: `
+                    <h3>Pembahasan Soal 9</h3>
+                    <p>Karena lift bergerak ke atas dengan perlambatan, arah percepatan adalah ke bawah. Gaya berat ($W$) searah dengan percepatan, sehingga $W > N$.</p>
+                    <ul>
+                        <li>$\\Sigma F = ma \\implies W - N = ma$</li>
+                        <li>$N = W - ma = mg - ma = m(g-a)$</li>
+                        <li>$N = 2(10-2) = 2(8) = 16$ N</li>
+                    </ul>
+                    <p>Jadi, gaya normal yang bekerja pada benda adalah <strong>16 N</strong>.</p>
+                `
+            },
+            {
+                question: `<p>Dua balok bermassa $m_1 = 3$ kg dan $m_2 = 2$ kg dihubungkan dengan tali dan katrol tak bermassa. Tali melewati katrol ganda yang diam. Berapakah tegangan tali pada sistem?</p>`,
+                options: [
+                    "24 N",
+                    "30 N",
+                    "20 N",
+                    "12 N"
+                ],
+                answer: "24 N",
+                discussion: `
+                    <h3>Pembahasan Soal 10</h3>
+                    <p>Pertama, cari percepatan sistem. Gaya total yang menyebabkan sistem bergerak adalah selisih gaya berat kedua balok.</p>
+                    <ul>
+                        <li>$\\Sigma F_{sistem} = (m_1+m_2)a \\implies W_1 - W_2 = (m_1+m_2)a$</li>
+                        <li>$(3 \\cdot 10) - (2 \\cdot 10) = (3+2)a \\implies 30 - 20 = 5a \\implies a = 2$ m/s²</li>
+                    </ul>
+                    <p>Kemudian, hitung tegangan tali ($T$) dengan meninjau salah satu balok. Jika menggunakan balok $m_2$ (yang bergerak ke atas), maka $T > W_2$.</p>
+                    <ul>
+                        <li>$T - W_2 = m_2 a$</li>
+                        <li>$T - 20 = 2(2) \\implies T = 20 + 4 = 24$ N</li>
+                    </ul>
+                    <p>Jadi, tegangan tali pada sistem adalah <strong>24 N</strong>.</p>
+                `
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        const quizContainer = document.getElementById('quiz-container');
+        const finalMessage = document.getElementById('final-message');
+
+        function renderQuestion() {
+            const questionData = quizData[currentQuestionIndex];
+            const quizCard = document.createElement('div');
+            quizCard.className = 'quiz-card active';
+            quizCard.innerHTML = `
+                <div class="question">Soal ${questionData.questionNumber}: ${questionData.question}</div>
+                <ul class="options-list">
+                    ${questionData.options.map((option, index) => `<li class="option-item" data-index="${index}">${option}</li>`).join('')}
+                </ul>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="submit-btn">Cek Jawaban</button>
+                    <button class="btn btn-secondary" id="discussion-btn" style="display:none;">Lihat Pembahasan</button>
+                    <button class="btn btn-primary" id="next-btn" style="display:none;">Soal Berikutnya</button>
+                </div>
+                <div id="pembahasan-section" style="display:none;">${questionData.discussion}</div>
+            `;
+
+            quizContainer.innerHTML = '';
+            quizContainer.appendChild(quizCard);
+
+            const optionsList = quizCard.querySelector('.options-list');
+            optionsList.addEventListener('click', (event) => {
+                if (event.target.classList.contains('option-item')) {
+                    optionsList.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
+                    event.target.classList.add('selected');
+                }
+            });
+
+            document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+            document.getElementById('discussion-btn').addEventListener('click', showDiscussion);
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+
+            // Render MathJax formulas
+            MathJax.typesetPromise();
+        }
+
+        function checkAnswer() {
+            const selectedOption = document.querySelector('.option-item.selected');
+            if (!selectedOption) {
+                alert('Pilih jawaban terlebih dahulu!');
+                return;
+            }
+
+            const isCorrect = selectedOption.textContent === quizData[currentQuestionIndex].answer;
+
+            selectedOption.classList.remove('selected');
+            if (isCorrect) {
+                selectedOption.classList.add('correct');
+            } else {
+                selectedOption.classList.add('incorrect');
+                const correctOption = Array.from(document.querySelectorAll('.option-item')).find(item => item.textContent === quizData[currentQuestionIndex].answer);
+                correctOption.classList.add('correct');
+            }
+
+            document.querySelectorAll('.option-item').forEach(item => item.style.pointerEvents = 'none');
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('discussion-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+
+        function showDiscussion() {
+            const pembahasanSection = document.getElementById('pembahasan-section');
+            pembahasanSection.style.display = 'block';
+            MathJax.typesetPromise([pembahasanSection]);
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                renderQuestion();
+            } else {
+                quizContainer.style.display = 'none';
+                finalMessage.style.display = 'block';
+            }
+        }
+
+        // Add question numbers to quizData
+        quizData.forEach((q, index) => {
+            q.questionNumber = index + 1;
+        });
+
+        // Start the quiz
+        renderQuestion();
+    </script>
+</body>
+</html>

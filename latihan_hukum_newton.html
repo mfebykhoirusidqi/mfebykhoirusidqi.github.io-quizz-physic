@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latihan Soal Fisika SMA – Hukum Newton (Kurikulum Merdeka)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#1e3a8a;      /* biru universitas */
+      --brand-2:#3b82f6;     /* biru aksen */
+      --accent:#facc15;      /* emas */
+      --bg:#0f172a;          /* slate-900 */
+      --panel:#0b1220;       /* deep panel */
+      --paper:#0f172a;       /* body bg */
+      --card:#0b1220;        
+      --muted:#94a3b8;       
+      --text:#e5e7eb;        
+      --good:#10b981;        
+      --bad:#ef4444;         
+      --radius:18px;
+      --shadow:0 16px 40px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;color:var(--text);background:
+      radial-gradient(1000px 500px at 0% -10%, rgba(59,130,246,.18), transparent 60%),
+      radial-gradient(900px 450px at 120% 0%, rgba(250,204,21,.15), transparent 60%),
+      var(--paper);
+    }
+
+    /* ===== NAVBAR RESPONSIF ===== */
+    .nav{position:sticky;top:0;z-index:1000;background:rgba(15,23,42,.7);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid rgba(148,163,184,.12)}
+    .nav-inner{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:700;letter-spacing:.3px}
+    .logo{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#e0f2fe;font-weight:900}
+    .links{display:flex;gap:18px}
+    .links a{color:var(--text);text-decoration:none;padding:8px 12px;border-radius:12px;border:1px solid rgba(148,163,184,.12)}
+    .links a:hover{border-color:rgba(250,204,21,.6);color:#fef3c7}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .hamburger span{width:26px;height:3px;background:#e5e7eb;border-radius:2px;transition:transform .25s,opacity .25s}
+    @media(max-width:820px){
+      .links{position:absolute;right:16px;top:62px;background:rgba(2,6,23,.95);border:1px solid rgba(148,163,184,.18);border-radius:14px;flex-direction:column;gap:0;overflow:hidden;max-height:0;transition:max-height .35s ease;box-shadow:var(--shadow)}
+      .links.show{max-height:260px}
+      .links a{border:0;border-bottom:1px solid rgba(148,163,184,.12);padding:12px 16px}
+      .links a:last-child{border-bottom:0}
+      .hamburger{display:flex}
+    }
+
+    /* ===== HERO ===== */
+    .hero{max-width:1100px;margin:26px auto;padding:24px 20px;display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+    .hero .left{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.14);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
+    .title{font-size:34px;line-height:1.15;margin:0 0 10px}
+    .subtitle{color:var(--muted);margin:0 0 14px}
+    .badge{display:inline-block;background:linear-gradient(135deg,var(--brand-2),var(--brand));padding:6px 10px;border-radius:999px;font-weight:700;color:#e0f2fe;font-size:12px}
+    .hero .right{border:1px solid rgba(148,163,184,.14);border-radius:var(--radius);overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));box-shadow:var(--shadow);display:grid;place-items:center}
+    .grid-bg{position:relative;width:100%;height:100%}
+    .grid-bg::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(96,165,250,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(96,165,250,.08) 1px, transparent 1px);background-size:26px 26px;opacity:.6}
+    .grid-bg svg{position:relative;width:86%;height:auto;opacity:.95}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}}
+
+    /* ===== WRAPPER ===== */
+    .wrap{max-width:1100px;margin:0 auto;padding:6px 20px 40px}
+
+    /* ===== FILTER & ACTIONS ===== */
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 14px}
+    .btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:12px;border:1px solid rgba(148,163,184,.18);background:#0b1220;color:var(--text);cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--brand-2),var(--brand));color:#e0f2fe;font-weight:800}
+
+    /* ===== KARTU SOAL ===== */
+    .quiz{display:grid;gap:16px}
+    .q-card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.14);border-radius:16px;padding:18px}
+    .q-title{font-weight:700;margin:0 0 6px}
+    .choices{display:grid;gap:8px;margin-top:8px}
+    .choices label{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid rgba(148,163,184,.18);border-radius:12px;cursor:pointer}
+    .choices input{accent-color:#60a5fa}
+    .exp{margin-top:8px;color:var(--muted);display:none}
+    .exp.show{display:block}
+    .result{margin-top:14px;font-weight:800}
+
+    /* highlight benar/salah */
+    .correct{border-color:rgba(16,185,129,.6)!important}
+    .wrong{border-color:rgba(239,68,68,.6)!important}
+
+    /* ===== FOOTER ===== */
+    footer{max-width:1100px;margin:30px auto 60px;color:var(--muted);padding:0 20px}
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand"><span class="logo">F</span><span>Fisika SMA • Latihan</span></div>
+      <nav class="links" id="navLinks">
+        <a href="index.html">Beranda</a>
+        <a href="#soal">Soal</a>
+        <a href="#panduan">Panduan</a>
+      </nav>
+      <div class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="left">
+      <div class="badge">Kurikulum Merdeka • Materi: Hukum Newton</div>
+      <h1 class="title">Latihan Soal Hukum Newton <span style="color:var(--accent)">Level Ujian</span></h1>
+      <p class="subtitle">Kerjakan soal pilihan ganda setara Ujian Nasional. Tersedia pembahasan tiap soal. Gunakan <b>g = 10 m/s²</b> kecuali dinyatakan lain.</p>
+      <div class="actions">
+        <button class="btn" onclick="toggleExplainAll()">Tampilkan/Sembunyikan Semua Pembahasan</button>
+        <button class="btn" onclick="acakSoal()">Acak Urutan Soal</button>
+        <button class="btn primary" onclick="cekSkor()">Cek Skor</button>
+        <button class="btn" onclick="resetJawaban()">Reset</button>
+      </div>
+      <p id="status" class="subtitle" style="margin-top:6px"></p>
+    </div>
+    <div class="right">
+      <div class="grid-bg">
+        <svg viewBox="0 0 600 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="24" y="24" width="552" height="312" rx="20" stroke="url(#g1)" opacity=".85"/>
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="#1e3a8a"/>
+              <stop offset="1" stop-color="#3b82f6"/>
+            </linearGradient>
+          </defs>
+          <g font-family="monospace" font-size="40" fill="#c7d2fe">
+            <text x="60" y="90">ΣF = m·a</text>
+            <text x="60" y="130">T - W = m·a</text>
+            <text x="60" y="170">f = μN</text>
+            <text x="60" y="210">a = (m₂−m₁)g/(m₁+m₂)</text>
+            <text x="60" y="250">F_c = m v² / r</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <main id="soal" class="wrap">
+    <h2 style="margin:8px 0 14px">Kumpulan Soal</h2>
+    <div id="quiz" class="quiz"></div>
+    <div id="score" class="result"></div>
+  </main>
+
+  <section id="panduan" class="wrap">
+    <h3>Panduan Singkat</h3>
+    <ul class="subtitle">
+      <li>Selalu mulai dari <b>diagram benda bebas</b> (DBB) untuk setiap benda.</li>
+      <li>Proyeksikan gaya pada sumbu sejajar/tegak lurus gerak.</li>
+      <li>Gunakan tanda arah konsisten, lalu terapkan <b>ΣF = m a</b>.</li>
+      <li>Ingat hubungan gesek: <b>fₛ ≤ μₛ N</b>, <b>fₖ = μₖ N</b>.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>© 2025 Latihan Fisika SMA • Hukum Newton • Kurikulum Merdeka</p>
+  </footer>
+
+  <script>
+    // ===== NAVBAR TOGGLE =====
+    const hb = document.getElementById('hamburger');
+    const links = document.getElementById('navLinks');
+    hb.addEventListener('click', ()=>{
+      links.classList.toggle('show');
+      const exp = hb.getAttribute('aria-expanded') === 'true';
+      hb.setAttribute('aria-expanded', String(!exp));
+    });
+
+    // ===== BANK SOAL HUKUM NEWTON =====
+    // Konvensi: setiap objek: { id, tanya, opsi:[...], k:'jawaban benar', bahas:'...' }
+    const SOAL = [
+      {
+        id:'n1',
+        tanya:'(Gaya Resultan & Gesek) Sebuah benda 2 kg di atas lantai datar dikenai gaya 14 N ke kanan dan 6 N ke kiri. Koefisien gesek kinetik 0,1. Percepatan benda adalah …',
+        opsi:['1 m/s²','2 m/s²','3 m/s²','6 m/s²'],
+        k:'3 m/s²',
+        bahas:'N = mg = 20 N → f_k = μ_k N = 0,1×20 = 2 N berlawanan arah gerak. Gaya bersih ke kanan: 14 − 6 − 2 = 6 N. Maka a = F_net / m = 6 / 2 = 3 m/s².'
+      },
+      {
+        id:'n2',
+        tanya:'(Bidang Miring) Balok 4 kg di bidang miring licin sebagian dengan sudut 30° memiliki μ_k = 0,2. Percepatan balok ke bawah bidang adalah …',
+        opsi:['2,0 m/s²','2,5 m/s²','3,3 m/s²','4,9 m/s²'],
+        k:'3,3 m/s²',
+        bahas:'Komponen berat sejajar bidang: mg sin30° = 4×10×0,5 = 20 N. Normal: mg cos30° ≈ 4×10×0,866 = 34,6 N → f_k = 0,2×34,6 ≈ 6,9 N (arah ke atas bidang). F_net = 20 − 6,9 = 13,1 N → a = 13,1/4 ≈ 3,3 m/s².'
+      },
+      {
+        id:'n3',
+        tanya:'(Katrol/Atwood) Dua massa 2 kg dan 5 kg dihubungkan tali melalui katrol licin. Tegangan tali T bernilai …',
+        opsi:['20 N','25 N','28,6 N','35 N'],
+        k:'28,6 N',
+        bahas:'a = (m₂ − m₁)g/(m₁ + m₂) = (5−2)×10/7 = 30/7 ≈ 4,29 m/s². T = m₁(g + a) = 2(10 + 4,29) ≈ 28,6 N (atau T = 2m₁m₂g/(m₁+m₂)).'
+      },
+      {
+        id:'n4',
+        tanya:'(Lift) Seseorang bermassa 60 kg berada di lift yang bergerak naik dengan percepatan 2 m/s². Besar gaya normal pada lantai lift adalah …',
+        opsi:['480 N','600 N','720 N','840 N'],
+        k:'720 N',
+        bahas:'N = m(g + a) = 60 (10 + 2) = 720 N. Saat percepatan ke atas, berat semu lebih besar.'
+      },
+      {
+        id:'n5',
+        tanya:'(Gaya Kontak) Dua balok m₁ = 3 kg dan m₂ = 2 kg di atas lantai licin didorong bersama oleh gaya F = 10 N. Gaya kontak antara kedua balok adalah …',
+        opsi:['2 N','4 N','6 N','10 N'],
+        k:'4 N',
+        bahas:'a = F/(m₁+m₂) = 10/5 = 2 m/s². Gaya kontak pada m₂ = m₂·a = 2×2 = 4 N.'
+      },
+      {
+        id:'n6',
+        tanya:'(Tarik Balok dengan Gesek) Balok 5 kg ditarik mendatar dengan gaya 20 N pada lantai dengan μ_k = 0,3. Percepatan balok adalah …',
+        opsi:['0 m/s²','0,5 m/s²','1,0 m/s²','2,0 m/s²'],
+        k:'1,0 m/s²',
+        bahas:'N = mg = 50 N → f_k = μ_k N = 0,3×50 = 15 N. Resultan = 20 − 15 = 5 N → a = 5/5 = 1 m/s².'
+      },
+      {
+        id:'n7',
+        tanya:'(Gaya Sentripetal) Benda 2 kg bergerak melingkar beraturan dengan v = 5 m/s pada lintasan jari-jari 2 m. Gaya tali yang menyediakan gaya sentripetal adalah …',
+        opsi:['10 N','20 N','25 N','50 N'],
+        k:'25 N',
+        bahas:'F_c = m v² / r = 2×25/2 = 25 N. Arah menuju pusat lingkaran.'
+      },
+      {
+        id:'n8',
+        tanya:'(Hukum III Newton) Dua siswa tarik-menarik tali hingga tegang dengan gaya 100 N berlawanan arah. Gaya yang dialami masing-masing siswa dari tali adalah …',
+        opsi:['0 N','50 N','100 N','200 N'],
+        k:'100 N',
+        bahas:'Aksi–reaksi: gaya pada kedua ujung tali sama besar, berlawanan arah. Tegangan tali = 100 N pada masing-masing.'
+      },
+      {
+        id:'n9',
+        tanya:'(Katrol + Gesek) Balok A (4 kg) di atas meja kasar (μ_k = 0,2) dihubungkan tali dengan balok B (3 kg) menggantung. Percepatan sistem adalah …',
+        opsi:['1,5 m/s²','2,0 m/s²','3,1 m/s²','4,0 m/s²'],
+        k:'3,1 m/s²',
+        bahas:'Ambil arah gerak ditarik B ke bawah. Gaya penarik = m_B g = 30 N. Gesek pada A: f_k = μ_k N = 0,2×(4×10) = 8 N menahan gerak. Gaya bersih = 30 − 8 = 22 N. Massa total 7 kg → a = 22/7 ≈ 3,1 m/s².'
+      },
+      {
+        id:'n10',
+        tanya:'(Keseimbangan di Bidang Miring) Benda 1 kg pada bidang miring halus 37° ditahan dengan gaya sejajar bidang agar diam. Besar gaya tersebut adalah … (sin 37° ≈ 0,6)',
+        opsi:['3 N','6 N','8 N','10 N'],
+        k:'6 N',
+        bahas:'Komponen berat sejajar bidang: mg sinθ = 1×10×0,6 = 6 N. Agar diam, gaya tarik sejajar bidang harus sama besar berlawanan arah, jadi 6 N.'
+      }
+    ];
+
+    // ===== RENDER SOAL =====
+    function renderSoal(){
+      const wrap = document.getElementById('quiz');
+      wrap.innerHTML = '';
+      SOAL.forEach((q,idx)=>{
+        const div = document.createElement('div');
+        div.className = 'q-card';
+        div.innerHTML = `
+          <div class="q-title">${idx+1}. ${q.tanya}</div>
+          <div class="choices">
+            ${q.opsi.map((o,i)=>`<label id="${q.id}-opt-${i}"><input type="radio" name="${q.id}" value="${o}"> ${String.fromCharCode(65+i)}. ${o}</label>`).join('')}
+          </div>
+          <details class="exp" id="exp-${q.id}"><summary><b>Pembahasan</b></summary><p>${q.bahas}</p></details>
+        `;
+        wrap.appendChild(div);
+      });
+      document.getElementById('score').textContent = '';
+      document.getElementById('status').textContent = '';
+    }
+
+    // ===== CEK SKOR =====
+    function cekSkor(){
+      let benar=0, total=SOAL.length, dijawab=0;
+      // reset highlight
+      document.querySelectorAll('.choices label').forEach(l=>l.classList.remove('correct','wrong'));
+
+      SOAL.forEach((q)=>{
+        const checked = document.querySelector(`input[name="${q.id}"]:checked`);
+        if(checked){
+          dijawab++;
+          const val = checked.value;
+          const labels = [...document.querySelectorAll(`input[name='${q.id}']`)].map(i=>i.parentElement);
+          labels.forEach(l=>{ if(l.textContent.trim().endsWith(q.k)) l.classList.add('correct'); });
+          if(val===q.k){ benar++; } else { checked.parentElement.classList.add('wrong'); }
+          document.getElementById(`exp-${q.id}`).classList.add('show');
+        }
+      });
+      if(dijawab===0){
+        document.getElementById('score').textContent = 'Pilih dan jawab dulu beberapa soal.';
+        document.getElementById('score').style.color = 'var(--muted)';
+        return;
+      }
+      const pct = Math.round(100*benar/total);
+      const score = document.getElementById('score');
+      score.textContent = `Skor Anda: ${benar}/${total} (${pct}%)`;
+      score.style.color = pct>=70 ? 'var(--good)' : 'var(--bad)';
+      document.getElementById('status').textContent = 'Pembahasan otomatis ditampilkan pada soal yang sudah dinilai.';
+    }
+
+    // ===== RESET & ACAK =====
+    function resetJawaban(){
+      document.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false);
+      document.querySelectorAll('.choices label').forEach(l=>l.classList.remove('correct','wrong'));
+      document.querySelectorAll('.exp').forEach(e=>e.classList.remove('show'));
+      document.getElementById('score').textContent='';
+      document.getElementById('status').textContent='';
+    }
+
+    function acakSoal(){
+      // acak urutan soal
+      for(let i=SOAL.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [SOAL[i],SOAL[j]]=[SOAL[j],SOAL[i]];
+      }
+      // acak opsi tiap soal
+      SOAL.forEach(q=>{ q.opsi = q.opsi.slice().sort(()=>Math.random()-0.5); });
+      renderSoal();
+    }
+
+    function toggleExplainAll(){
+      const all = document.querySelectorAll('.exp');
+      const someClosed = [...all].some(d=>!d.classList.contains('show'));
+      all.forEach(d=> d.classList.toggle('show', someClosed));
+    }
+
+    // ===== INIT =====
+    renderSoal();
+  </script>
+</body>
+</html>

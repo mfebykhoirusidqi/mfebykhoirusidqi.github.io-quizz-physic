@@ -1,138 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ujian Fisika Kelas 12</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Belajar Fisika SMA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: #1e3a8a;
+      color: #fff;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    nav h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 24px;
       margin: 0;
       padding: 0;
     }
-
-    body {
-      background: #121212;
-      font-family: 'Orbitron', sans-serif;
+    nav a {
       color: #fff;
-      min-height: 100vh;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #facc15;
+    }
+
+    /* ===== HAMBURGER MENU ===== */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .bar {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.4s;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        background: #1e3a8a;
+        flex-direction: column;
+        gap: 0;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s ease-in-out;
+        border-radius: 0 0 10px 10px;
+      }
+      nav ul.show {
+        max-height: 500px;
+      }
+      nav ul li {
+        text-align: right;
+        padding: 15px 20px;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(to right, #1e3a8a, #3b82f6);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h2 {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      padding: 60px 40px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: transform .3s ease, box-shadow .3s ease;
+      border-top: 5px solid #1e3a8a;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      background-image: radial-gradient(circle, #1e1e1e 0%, #000000 100%);
+      justify-content: space-between;
     }
-
-    .logo-container {
-      margin-bottom: 20px;
-      animation: pulse 2s infinite ease-in-out;
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+      border-top: 5px solid #facc15;
     }
-
-    .logo-container img {
-      width: 100px;
-      filter: drop-shadow(0 0 15px #00ffee);
+    .card h3 {
+      margin: 0 0 12px;
+      color: #1e3a8a;
+      font-size: 20px;
     }
-
-    h1 {
-      font-size: 2.5em;
-      color: #00ffee;
-      text-shadow: 0 0 10px #00ffee;
-      margin-bottom: 30px;
+    .card p {
+      margin: 0 0 20px;
+      font-size: 14px;
+      color: #475569;
+    }
+    .card-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .btn {
+      flex: 1;
+      background: #1e3a8a;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
       text-align: center;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #facc15;
+      color: #1e293b;
     }
 
-    .test-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      width: 100%;
-      max-width: 1000px;
-    }
-
-    .test-card {
-      background: #1e1e1e;
-      border: 2px solid #00ffee;
-      border-radius: 15px;
-      padding: 20px;
+    footer {
+      background: #1e3a8a;
+      color: #e2e8f0;
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 0 10px #00ffee55;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .test-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00ffeecc;
-    }
-
-    .icon {
-      font-size: 50px;
-      margin-bottom: 15px;
-      color: #ff00cc;
-      text-shadow: 0 0 10px #ff00cc;
-    }
-
-    .test-title {
-      font-size: 1.5em;
-      margin-bottom: 10px;
-      color: #ffffff;
-    }
-
-    .btn-start {
-      background-color: #00ffee;
-      color: #121212;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-start:hover {
-      background-color: #00ccaa;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.8; }
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2em;
-      }
-
-      .icon {
-        font-size: 40px;
-      }
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
+  <nav>
+    <h1>Belajar Fisika SMA</h1>
+    <ul id="menu">
+      <li><a href="index.html">Beranda</a></li>
+      <li><a href="materi.html">Materi</a></li>
+      <li><a href="latihan.html">Latihan Soal</a></li>
+    </ul>
+    <div class="menu-toggle" id="menu-toggle">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </nav>
 
-  <div class="logo-container">
-  </div>
+  <section class="hero">
+    <h2>📘 Portal Belajar Fisika SMA</h2>
+    <p>Dari Pengukuran hingga Relativitas. Pelajari konsep, rumus, dan uji pemahamanmu dengan latihan soal interaktif.</p>
+  </section>
 
-  <h1>Ujian Fisika Kelas 12</h1>
-
-  <div class="test-container">
-    <!-- Card 1 -->
-    <div class="test-card">
-      <div class="icon">⚡</div>
-      <div class="test-title">DC Current</div>
-      <button class="btn-start" onclick="location.href='test_dc_v2.html'">Mulai Tes</button>
+  <div class="cards">
+    <div class="card">
+      <h3>📏 Pengukuran</h3>
+      <p>Konsep dasar pengukuran, besaran, dan satuan.</p>
+      <div class="card-buttons">
+        <a href="materi_pengukuran.html" class="btn">Pelajari Materi</a>
+        <a href="latihan_pengukuran.html" class="btn">Latihan Soal</a>
+      </div>
     </div>
 
-    <!-- Card 2 -->
-    <div class="test-card">
-      <div class="icon">🧲</div>
-      <div class="test-title">Static Current</div>
-      <button class="btn-start" onclick="location.href='test_static.html'">Mulai Tes</button>
+    <div class="card">
+      <h3>⚖️ Hukum Newton</h3>
+      <p>Hukum I, II, III Newton dan aplikasinya.</p>
+      <div class="card-buttons">
+        <a href="materi_hukum_newton.html" class="btn">Pelajari Materi</a>
+        <a href="latihan_hukum_newton.html" class="btn">Latihan Soal</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🛤️ Konsep Bidang Miring</h3>
+      <p>Pembahasan lengkap konsep gaya pada bidang miring, analisis komponen gaya, dan penerapannya dalam kehidupan sehari-hari.</p>
+      <div class="card-buttons">
+        <a href="materi_bidang_miring.html" class="btn">Pelajari Materi</a>
+        <a href="latihan_bidang_miring.html" class="btn">Latihan Soal</a>
+      </div>   
+    </div>
+
+    <div class="card">
+      <h3>🔋 Usaha & Energi</h3>
+      <p>Usaha, energi, dan hukum kekekalan energi.</p>
+      <div class="card-buttons">
+        <a href="materi.html#energi" class="btn">Pelajari Materi</a>
+        <a href="latihan.html#energi" class="btn">Latihan Soal</a>
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <h3>💥 Momentum & Impuls</h3>
+      <p>Konsep tumbukan dan hukum kekekalan momentum.</p>
+      <div class="card-buttons">
+        <a href="materi.html#momentum" class="btn">Pelajari Materi</a>
+        <a href="latihan.html#momentum" class="btn">Latihan Soal</a>
+      </div>
+    </div>
+
+     <div class="card">
+      <h3>⚡ Listrik Statis</h3>
+      <p>fenomena listrik statis, analisis.</p>
+      <div class="card-buttons">
+        <a href="materi_statis.html" class="btn">Pelajari Materi</a>
+        <a href="test_static.html" class="btn">Latihan Soal</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⚡ Listrik DC</h3>
+      <p>Hukum Ohm, rangkaian listrik, dan daya.</p>
+      <div class="card-buttons">
+        <a href="materi_listrik_dc.html" class="btn">Pelajari Materi</a>
+        <a href="test_dc_v2.html" class="btn">Latihan Soal</a>
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <h3>🌌 Relativitas</h3>
+      <p>Relativitas khusus Einstein: waktu dan ruang.</p>
+      <div class="card-buttons">
+        <a href="materi.html#relativitas" class="btn">Pelajari Materi</a>
+        <a href="latihan.html#relativitas" class="btn">Latihan Soal</a>
+      </div>
     </div>
   </div>
 
+  <footer>
+    © 2025 Belajar Fisika SMA • Inspirasi Pembelajaran Profesional
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('show');
+      toggle.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
