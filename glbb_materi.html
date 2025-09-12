@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GLBB — Materi Lengkap</title>
+  <link rel="icon" href="data:,"><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <style>
+    /* Custom Tailwind CSS Configuration (diletakkan di sini untuk kemudahan) */
+    /* Biasanya ini ada di tailwind.config.js, tapi untuk single file bisa di-embed */
+    :root {
+      --color-primary-50: #eff6ff;
+      --color-primary-100: #dbeafe;
+      --color-primary-200: #bfdbfe;
+      --color-primary-300: #93c5fd;
+      --color-primary-400: #60a5fa;
+      --color-primary-500: #3b82f6;
+      --color-primary-600: #2563eb;
+      --color-primary-700: #1d4ed8;
+      --color-primary-800: #1e40af;
+      --color-primary-900: #1e3a8a;
+      
+      --color-background-light: #f7f9fc;
+      --color-text-dark: #1a202c;
+      --color-text-muted: #64748b;
+      --color-card-border: #e2e8f0;
+      --color-formula-bg: #0f172a;
+      --color-formula-text: #e2f2ff;
+    }
+
+    body {
+      background: var(--color-background-light);
+      font-family: 'Inter', sans-serif;
+      color: var(--color-text-dark);
+      line-height: 1.7; /* Menambah line-height untuk keterbacaan */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .container {
+      max-width: 1200px; /* Lebar container sedikit diperbesar */
+      margin: 0 auto; /* Hilangkan margin top-bottom default untuk layout header baru */
+      padding: 0 24px; /* Padding samping yang lebih baik */
+    }
+
+    /* Header Styling */
+    .main-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradien biru ungu yang elegan */
+      color: white;
+      padding: 20px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px; /* Jarak bawah header */
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .main-header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .header-logo {
+      font-size: 1.75rem; /* Ukuran logo lebih besar */
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .header-logo img {
+      height: 32px; /* Ukuran icon logo */
+      margin-right: 10px;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 30px; /* Jarak antar menu */
+    }
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      padding: 5px 0;
+      position: relative;
+    }
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s ease-out;
+    }
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+    
+    /* Hamburger Menu for Mobile */
+    .hamburger-icon {
+      display: none; /* Sembunyikan di desktop */
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      justify-content: space-between;
+    }
+    .hamburger-icon span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      transition: all 0.3s ease-in-out;
+    }
+    .mobile-nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .mobile-nav-overlay.open {
+      display: flex;
+    }
+    .mobile-nav-menu {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .mobile-nav-menu a {
+      display: block;
+      color: var(--color-text-dark);
+      padding: 15px 0;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-bottom: 1px solid #eee;
+    }
+    .mobile-nav-menu a:last-child {
+      border-bottom: none;
+    }
+    .mobile-nav-menu .close-btn {
+        margin-top: 20px;
+        background-color: var(--color-primary-600);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+ .mt-2.small-muted2 {
+    font-size: 14px; /* default desktop */
+  }
+
+  .media-card{
+      border:1px solid rgba(124,240,255,.15);
+      border-radius:14px; overflow:hidden; box-shadow: var(--shadow);
+      transition: transform .2s ease;
+    }
+    .media-card:hover{ transform: translateY(-4px) }
+    .media-card iframe{ width:100%; height:260px; border:0; display:block }
+    .media-card .caption{ padding:10px 12px; color:var(--muted); font-weight:600 }
+  @media (max-width: 640px) {
+    .mt-2.small-muted2 {
+      font-size: 10px; /* mobile */
+    }
+  }
+    /* Media Queries for Mobile Responsiveness */
+    @media(max-width: 768px) {
+      .nav-menu {
+        display: none; /* Sembunyikan menu di mobile */
+      }
+      .hamburger-icon {
+        display: flex; /* Tampilkan hamburger di mobile */
+      }
+      .main-header .container {
+        padding: 0 15px;
+      }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      h3 { font-size: 1.3rem; }
+      .card { padding: 24px; }
+      .grid-2 { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    /* General Content Styling */
+    .card {
+      background: #ffffff;
+      border-radius: 16px; /* Sudut lebih lembut */
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04); /* Bayangan lebih ringan */
+      padding: 32px;
+      margin-bottom: 24px;
+      border: 1px solid var(--color-card-border);
+    }
+    .kbadge {
+      background: var(--color-primary-100);
+      color: var(--color-primary-700);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    .formula {
+      background: var(--color-formula-bg);
+      color: var(--color-formula-text);
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .formula pre {
+      white-space: pre-wrap;
+      font-size: 1.05em; /* Ukuran rumus sedikit lebih kecil agar pas */
+      line-height: 1.5;
+    }
+    .small-muted {
+      color: var(--color-text-muted);
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--color-text-dark);
+    }
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+    }
+    h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+    }
+    input[type="number"], input[type="text"], .p-2 {
+        border-color: #cbd5e1;
+        border-width: 1px;
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-radius: 8px; /* Input rounded */
+    }
+    input[type="number"]:focus, input[type="text"]:focus, .p-2:focus {
+        outline: none;
+        border-color: var(--color-primary-500);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Ring focus */
+    }
+    button {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        border-radius: 8px; /* Tombol rounded */
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .bg-blue-600 {
+        background-color: var(--color-primary-600);
+    }
+    .bg-blue-600:hover {
+        background-color: var(--color-primary-700);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+    }
+    .bg-blue-50 {
+        background-color: var(--color-primary-50);
+    }
+    .optBtn:hover {
+        background-color: var(--color-primary-100);
+    }
+    .optBtn.bg-blue-50 {
+        background-color: var(--color-primary-200);
+        border-color: var(--color-primary-500);
+    }
+    .text-green-600 { color: #16a34a; }
+    .text-red-600 { color: #dc2626; }
+    details > summary {
+      cursor: pointer;
+      padding: 8px 0;
+      font-size: 1.05rem;
+      color: var(--color-primary-700);
+    }
+    details[open] summary {
+        color: var(--color-text-dark);
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <a href="#" class="header-logo">
+        Belajar Fisika
+      </a>
+      <nav class="nav-menu hidden md:flex">
+        <a href="/index.html">Home</a>
+        <a href="#pengantar">Pengantar</a>
+        <a href="#deduksi">Deduksi</a>
+        <a href="#interaktif">Interaktif</a>
+        <a href="#quiz">Latihan</a>
+        <a href="#sumber">Sumber</a>
+      </nav>
+      <div class="hamburger-icon md:hidden" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <div class="mobile-nav-menu">
+        <a href="/index.html" class="mobile-nav-link">Home</a>
+      <a href="#pengantar" class="mobile-nav-link">Pengantar</a>
+      <a href="#deduksi" class="mobile-nav-link">Deduksi</a>
+      <a href="#interaktif" class="mobile-nav-link">Interaktif</a>
+      <a href="#quiz" class="mobile-nav-link">Latihan</a>
+      <a href="#sumber" class="mobile-nav-link">Sumber</a>
+      <button class="close-btn" id="closeMobileNav">Tutup</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <section class="card mb-8">
+      <h1 class="text-4xl font-extrabold mb-4 text-center">Gerak Lurus Berubah Beraturan (GLBB)</h1>
+      <p class="text-xl small-muted text-center max-w-3xl mx-auto">
+        Materi terstruktur sesuai <span class="kbadge">Kurikulum Merdeka</span> & <span class="kbadge">Cambridge IGCSE / A‑Level</span>.
+        Termasuk rumus, deduksi, contoh soal, kasus nyata, video, dan interaktif.
+      </p>
+      
+    </section>
+
+    <section class="card" id="tujuan-pembelajaran">
+      <h2>Tujuan Pembelajaran</h2>
+      <ul class="mt-4 list-disc ml-6 small-muted">
+        <li>Memahami definisi GLBB dan perbedaan dengan GLB.</li>
+        <li>Mengidentifikasi hubungan antara percepatan, kecepatan, dan perpindahan.</li>
+        <li>Mampu menurunkan dan menggunakan persamaan GLBB: \(v=v_0+at\), \(x=x_0+v_0t+\tfrac12 at^2\), \(v^2=v_0^2+2a\Delta x\).</li>
+        <li>Menyelesaikan soal numerik dan kasus nyata (rem mobil, elevator, olahraga).</li>
+        <li>Menggunakan alat bantu interaktif (kalkulator GLBB & grafik) untuk analisis.</li>
+      </ul>
+    </section>
+
+    <div class="grid-2 mt-8">
+      <main>
+        <section class="card" id="pengantar">
+          <h3>1. Pengantar & Definisi</h3>
+          <p class="small-muted mt-3">Gerak Lurus Berubah Beraturan (GLBB) adalah gerak pada lintasan lurus di mana percepatan <em>konstan</em> (tidak berubah seiring waktu). Oleh karena itu, kecepatan berubah secara linear terhadap waktu.</p>
+          <h4 class="mt-5 font-semibold">Konsep kunci</h4>
+          <ul class="list-disc ml-6 small-muted mt-2">
+            <li><strong>Kecepatan awal</strong> \(v_0\)</li>
+            <li><strong>Kecepatan sesaat</strong> \(v(t)\)</li>
+            <li><strong>Percepatan konstan</strong> \(a\)</li>
+            <li><strong>Perpindahan</strong> \(x(t)-x_0\)</li>
+          </ul>
+          <div class="mt-5">
+            <div class="font-semibold">Persamaan dasar (GLBB)</div>
+            <div class="mt-2 formula">
+              \[
+                v = v_0 + a t
+              \]
+              \[
+                x = x_0 + v_0 t + \tfrac{1}{2} a t^2
+              \]
+              \[
+                v^2 = v_0^2 + 2a (x - x_0)
+              \]
+            </div>
+            <p class="small-muted mt-3">MathJax digunakan untuk menampilkan rumus dengan rapi. Jika ingin menurunkan persamaan dari definisi v = dx/dt dan a = dv/dt, lihat bagian deduksi di bawah.</p>
+          </div>
+        </section>
+
+        <section class="card" id="deduksi">
+          <h3>2. Deduksi Persamaan (Singkat & Rapi)</h3>
+          <p class="small-muted mt-3">Mulai dari definisi percepatan konstan:</p>
+          <div class="formula mt-2">
+            \[ a = \frac{\Delta v}{\Delta t} = \frac{v - v_0}{t} \Rightarrow v = v_0 + a t. \]
+            \[ v = \frac{dx}{dt} \Rightarrow dx = v dt = (v_0 + at) dt. \]
+            Integrasi dari \(t=0\) ke \(t=t\):
+            \[ x - x_0 = \int_0^t (v_0 + a t') dt' = v_0 t + \tfrac{1}{2} a t^2. \]
+            Dengan mengeliminasi \(t\) dari dua persamaan: \(t = (v - v_0)/a\), kita dapatkan:
+            \[ v^2 - v_0^2 = 2 a (x - x_0). \]
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>3. Interpretasi Fisik & Unit</h3>
+          <ul class="list-disc ml-6 small-muted mt-3">
+            <li>Percepatan positif: kecepatan meningkat ke arah positif.</li>
+            <li>Percepatan negatif (perlambatan): kecepatan menurun. Contoh rem mobil.</li>
+            <li>Unit umum: \(v, v_0\) dalam m/s; \(a\) dalam m/s²; \(x\) dalam meter; \(t\) dalam sekon.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>4. Contoh Soal & Pembahasan Langkah-demi-langkah</h3>
+          <div class="mt-3">
+            <strong>Contoh 1 (Dasar)</strong>
+            <p class="small-muted mt-1">Sebuah mobil bergerak dengan kecepatan awal 20 m/s dan percepatan konstan 2 m/s². Berapa kecepatan mobil setelah 5 s dan berapa jarak yang ditempuh sejak t=0?</p>
+            <details class="mt-3"><summary class="font-medium">Lihat pembahasan</summary>
+              <div class="mt-2 small-muted2" >
+                \[ v = v_0 + a t = 20 + 2\times5 = 30\ \text{m/s}. \]
+                \[ x = v_0 t + \tfrac12 a t^2 = 20\times5 + \tfrac12\times2\times5^2 = 100 + 25 = 125\ \text{m}. \]
+              </div>
+            </details>
+          </div>
+          <div class="mt-5">
+            <strong>Contoh 2 (Perlambatan & Jarak Henti)</strong>
+            <p class="small-muted mt-1">Sebuah sepeda melaju 18 m/s. Saat pengendara mengerem, sepeda mengalami percepatan -3 m/s². Berapa jarak berhentinya?</p>
+            <details class="mt-3"><summary class="font-medium">Lihat pembahasan</summary>
+              <div class="mt-2 small-muted2">
+                Gunakan \(v^2 = v_0^2 + 2 a \Delta x\) dengan \(v=0\):
+                \[ 0 = 18^2 + 2(-3)\Delta x \Rightarrow \Delta x = \frac{-18^2}{2(-3)} = \frac{324}{6} = 54\ \text{m}.\]
+              </div>
+            </details>
+          </div>
+          <div class="mt-5">
+            <strong>Contoh 3 (Soal TKA/SMA Level Tinggi)</strong>
+            <p class="small-muted mt-1">Sebuah benda mulai bergerak dari posisi x_0 = 0 dengan kecepatan awal 5 m/s dan percepatan konstan a yang tidak diketahui. Setelah 4 s, kecepatannya menjadi 21 m/s. Hitung a dan jarak yang ditempuh dalam 4 s.</p>
+            <details class="mt-3"><summary class="font-medium">Lihat pembahasan</summary>
+              <div class="mt-2 small-muted2">
+                Dari \(v=v_0+at\): \(a = (v-v_0)/t = (21-5)/4 = 16/4 = 4\ \text{m/s}^2.\)
+                Jarak: \(x = v_0 t + \tfrac12 a t^2 = 5\times4 + \tfrac12\times4\times16 = 20 + 32 = 52\ \text{m}.\)
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="card" id="interaktif">
+          <h3>6. Interaktif: Kalkulator GLBB & Grafik</h3>
+          <p class="small-muted mt-3">Masukkan nilai di bawah, klik <em>Plot</em> untuk melihat grafik kecepatan vs waktu dan posisi vs waktu.</p>
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <div>
+              <label class="block small-muted text-sm mb-1">Kecepatan awal (m/s)</label>
+              <input id="v0" type="number" value="0" class="p-2 border rounded w-full" />
+            </div>
+            <div>
+              <label class="block small-muted text-sm mb-1">Percepatan (m/s²)</label>
+              <input id="a" type="number" value="2" class="p-2 border rounded w-full" />
+            </div>
+            <div>
+              <label class="block small-muted text-sm mb-1">Waktu total (s)</label>
+              <input id="tmax" type="number" value="10" class="p-2 border rounded w-full" />
+            </div>
+            <div class="flex items-end">
+              <button id="plotBtn" class="bg-blue-600 text-white px-5 py-2.5 rounded shadow-lg hover:shadow-xl w-full">Plot Grafik</button>
+            </div>
+          </div>
+          <div class="mt-5">
+            <canvas id="vChart" height="140"></canvas>
+          </div>
+          <div class="mt-5">
+            <canvas id="xChart" height="140"></canvas>
+          </div>
+        </section>
+
+        <section class="card" id="quiz">
+          <h3>7. Latihan Soal Interaktif (2 soal)</h3>
+          <div id="quiz-content"></div>
+        </section>
+
+      </main>
+
+      <aside>
+        <section class="card">
+          <h4>Video Pembelajaran (Tambahkan/Preview)</h4>
+          <p class="small-muted mt-3"></p>
+          <input id="ytUrl" class="mt-2 p-2 border rounded w-full" value ="https://youtu.be/3YCRAse9irs?si=mpC4yQSrXHJWwFyR" />
+          <div class="flex gap-3 mt-3">
+            <button id="previewBtn" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:shadow-md w-full">Preview</button>
+            <button id="resetVideo" class="px-4 py-2 border rounded hover:bg-gray-100 w-full">Reset</button>
+          </div>
+                <br>
+           <div class="media-card">
+          <iframe src="https://www.youtube.com/embed/3YCRAse9irs?si=mpC4yQSrXHJWwFyR"
+                  title="Relativity (Kurzgesagt)"></iframe>
+          <div class="caption">Video populer: gambaran intuitif relativitas (bahasa Inggris).</div>
+        </div>
+            <br>
+          <div class="mt-4" style="min-height:200px">
+            <div id="videoWrap" class="w-full h-48 bg-gray-50 rounded overflow-hidden flex items-center justify-center">
+              <div class="small-muted p-4 text-center">Video preview akan muncul di sini setelah memasukkan URL/ID.</div>
+              <iframe id="ytFrame" class="w-full h-48" src="" frameborder="0" allowfullscreen style="display:none"></iframe>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h4>Ringkasan Rumus Cepat</h4>
+          <div class="mt-3 formula">
+            \[ v = v_0 + a t \]
+            \[ x = x_0 + v_0 t + \tfrac12 a t^2 \]
+            \[ v^2 = v_0^2 + 2 a (x-x_0) \]
+          </div>
+          <p class="small-muted mt-3">Tips cepat: gunakan persamaan yang tidak mengandung variabel yang tidak diketahui (misal kalau tidak ada t gunakan rumus kecepatan-kuadrat).</p>
+        </section>
+
+        <section class="card" id="sumber">
+          <h4>Sumber & Rekomendasi</h4>
+          <ul class="list-disc ml-6 small-muted mt-3">
+            <li>Kurikulum Merdeka — kompetensi dasar GLBB (sisihkan untuk penyusunan RPP).</li>
+            <li>Cambridge IGCSE / A‑Level — topik kinematics & dynamics untuk problem solving.</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // Plot logic using Chart.js
+    let vChart = null; let xChart = null;
+    function createCharts(tArr, vArr, xArr){
+      const ctxV = document.getElementById('vChart').getContext('2d');
+      const ctxX = document.getElementById('xChart').getContext('2d');
+      if(vChart) vChart.destroy(); if(xChart) xChart.destroy();
+      vChart = new Chart(ctxV, {type:'line', data:{labels:tArr, datasets:[{label:'v(t) (m/s)',data:vArr,fill:false,tension:0.3, borderColor: 'var(--color-primary-600)', backgroundColor: 'var(--color-primary-600)'}]}, options:{responsive:true, plugins: {legend: {display: false}}, scales: {y: {title: {display: true, text: 'Kecepatan (m/s)'}}, x: {title: {display: true, text: 'Waktu (s)'}}}}});
+      xChart = new Chart(ctxX, {type:'line', data:{labels:tArr, datasets:[{label:'x(t) (m)',data:xArr,fill:false,tension:0.3, borderColor: 'var(--color-primary-800)', backgroundColor: 'var(--color-primary-800)'}]}, options:{responsive:true, plugins: {legend: {display: false}}, scales: {y: {title: {display: true, text: 'Posisi (m)'}}, x: {title: {display: true, text: 'Waktu (s)'}}}}});
+    }
+
+    document.getElementById('plotBtn').addEventListener('click', ()=>{
+      const v0 = parseFloat(document.getElementById('v0').value) || 0;
+      const a = parseFloat(document.getElementById('a').value) || 0;
+      const tmax = Math.max(0.1, parseFloat(document.getElementById('tmax').value) || 10);
+      const n = 50; const dt = tmax / n;
+      const tArr = []; const vArr = []; const xArr = [];
+      let x=0;
+      for(let i=0;i<=n;i++){ const t = +(i*dt).toFixed(3); const v = +(v0 + a*t).toFixed(6); const xpos = +(v0*t + 0.5*a*t*t).toFixed(6); tArr.push(t); vArr.push(v); xArr.push(xpos);}
+      createCharts(tArr,vArr,xArr);
+    });
+
+    // YouTube preview
+    function parseYouTubeUrl(u){
+      if(!u) return null;
+      if(!u.includes('http')) return u;
+      try{
+        const url = new URL(u);
+        if(url.hostname.includes('youtube.com')) return url.searchParams.get('v');
+        if(url.hostname.includes('youtu.be')) return url.pathname.slice(1);
+      }catch(e){return null}
+      return null;
+    }
+    document.getElementById('previewBtn').addEventListener('click', ()=>{
+      const val = document.getElementById('ytUrl').value.trim();
+      const id = parseYouTubeUrl(val);
+      const wrap = document.getElementById('videoWrap');
+      if(id){
+          wrap.innerHTML = `<iframe id="ytFrame" class="w-full h-48" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        alert('Masukkan URL atau ID YouTube yang valid. Contoh: https://www.youtube.com/watch?v=VIDEO_ID');
+      }
+    });
+    document.getElementById('resetVideo').addEventListener('click', ()=>{
+        document.getElementById('ytUrl').value='';
+        const wrap = document.getElementById('videoWrap');
+        wrap.innerHTML = `<div class="small-muted p-4 text-center">Video preview akan muncul di sini setelah memasukkan URL/ID.</div>`;
+    });
+
+    // small interactive quiz
+    const quizData = [
+      {q:'Sebuah mobil memiliki v₀ = 10 m/s dan a = 3 m/s². Berapakah kecepatannya setelah 4 s?', opts:['22 m/s','24 m/s','34 m/s','26 m/s'], a:0, explain:'v = 10 + 3*4 = 22 m/s (pilihan A).'},
+      {q:'Sebuah benda meluncur dengan v₀ = 0 dan a = 2 m/s². Berapakah posisi setelah 3 s?', opts:['6 m','9 m','4.5 m','3 m'], a:1, explain:'x = 0 + 0 + 1/2*2*3² = 9 m (pilihan B).'}
+    ];
+    const quizDiv = document.getElementById('quiz-content'); // Mengubah ID dari quiz menjadi quiz-content
+    let qIdx=0, qScore=0, answered=false;
+    function renderQuiz(){
+      const Q = quizData[qIdx];
+      answered = false;
+      quizDiv.innerHTML = `<div class=\"p-4 border border-gray-200 rounded-lg bg-white\">\n
+        <div class=\"font-semibold text-lg text-primary-700\">Soal ${qIdx+1}</div>\n
+        <p class=\"mt-3 small-muted\">${Q.q}</p>\n
+        <div class=\"mt-4 grid grid-cols-1 gap-2\">${Q.opts.map((o,i)=>`<button data-i=\"${i}\" class=\"optBtn p-3 border border-gray-300 rounded-lg text-left hover:bg-primary-50 text-base\">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>\n
+        <div class=\"mt-5 flex justify-end\">\n
+          <button id=\"nextQ\" class=\"bg-blue-600 text-white px-6 py-2 rounded shadow hover:shadow-md\">Periksa</button>\n
+        </div>\n
+        <div id=\"qFeedback\" class=\"mt-4 small-muted text-base\"></div>\n
+      </div>`;
+      document.querySelectorAll('.optBtn').forEach(b=>b.addEventListener('click', (e)=>{
+        if(answered) return;
+        document.querySelectorAll('.optBtn').forEach(x=>x.classList.remove('bg-blue-50', 'border-primary-500'));
+        e.currentTarget.classList.add('bg-blue-50', 'border-primary-500');
+        document.getElementById('nextQ').textContent = 'Periksa';
+      }));
+      document.getElementById('nextQ').addEventListener('click', ()=>{
+        if(answered) return;
+        const sel = document.querySelector('.optBtn.bg-blue-50');
+        if(!sel){ alert('Pilih jawaban dulu'); return; }
+        const i = parseInt(sel.getAttribute('data-i'));
+        const fb = document.getElementById('qFeedback');
+        const nextBtn = document.getElementById('nextQ');
+        answered = true;
+        
+        if(i===Q.a){
+            qScore++;
+            fb.innerHTML = `<div class=\"text-green-600 font-semibold\">Benar!</div><div class=\"mt-2\">${Q.explain}</div>`;
+            sel.classList.remove('bg-blue-50', 'border-primary-500');
+            sel.classList.add('bg-green-100', 'border-green-500');
+        } else {
+            fb.innerHTML = `<div class=\"text-red-600 font-semibold\">Salah.</div><div class=\"mt-2\">${Q.explain}</div>`;
+            sel.classList.remove('bg-blue-50', 'border-primary-500');
+            sel.classList.add('bg-red-100', 'border-red-500');
+            const correctBtn = document.querySelector(`.optBtn[data-i="${Q.a}"]`);
+            correctBtn.classList.add('bg-green-100', 'border-green-500');
+        }
+        document.querySelectorAll('.optBtn').forEach(x=>x.disabled=true);
+        nextBtn.textContent = 'Selanjutnya';
+        nextBtn.onclick = () => {
+          if(qIdx < quizData.length-1){
+            qIdx++;
+            renderQuiz();
+          } else {
+            quizDiv.innerHTML = `<div class=\"p-4 border border-gray-200 rounded-lg bg-white\"><div class=\"font-semibold text-lg text-primary-700\">Selesai</div><p class=\"mt-2 small-muted\">Skor Anda: ${qScore} / ${quizData.length}</p></div>`;
+          }
+        };
+      });
+    }
+    renderQuiz();
+
+    // Hamburger menu functionality
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeMobileNav = document.getElementById('closeMobileNav');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    hamburgerBtn.addEventListener('click', () => {
+      mobileNav.classList.add('open');
+    });
+
+    closeMobileNav.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // Ensure initial chart rendering
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('plotBtn').click();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fluida Statis — Materi & Aplikasi Fisika SMA</title>
+  <link rel="icon" href="data:,"><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    :root {
+      --color-primary-50: #eff6ff;
+      --color-primary-100: #dbeafe;
+      --color-primary-200: #bfdbfe;
+      --color-primary-300: #93c5fd;
+      --color-primary-400: #60a5fa;
+      --color-primary-500: #3b82f6;
+      --color-primary-600: #2563eb;
+      --color-primary-700: #1d4ed8;
+      --color-primary-800: #1e40af;
+      --color-primary-900: #1e3a8a;
+      --color-background-light: #f7f9fc;
+      --color-text-dark: #1a202c;
+      --color-text-muted: #64748b;
+      --color-card-border: #e2e8f0;
+    }
+    body {
+      background: var(--color-background-light);
+      font-family: 'Inter', sans-serif;
+      color: var(--color-text-dark);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .main-header {
+      background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+      color: white;
+      padding: 20px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .main-header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .header-logo {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 30px;
+    }
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      padding: 5px 0;
+      position: relative;
+    }
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s ease-out;
+    }
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+    .hamburger-icon {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      justify-content: space-between;
+    }
+    .hamburger-icon span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      transition: all 0.3s ease-in-out;
+    }
+    .mobile-nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .mobile-nav-overlay.open {
+      display: flex;
+    }
+    .mobile-nav-menu {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .mobile-nav-menu a {
+      display: block;
+      color: var(--color-text-dark);
+      padding: 15px 0;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-bottom: 1px solid #eee;
+    }
+    .mobile-nav-menu a:last-child {
+      border-bottom: none;
+    }
+    .mobile-nav-menu .close-btn {
+        margin-top: 20px;
+        background-color: var(--color-primary-600);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    @media(max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      .hamburger-icon {
+        display: flex;
+      }
+      .main-header .container {
+        padding: 0 15px;
+      }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      .card { padding: 24px; }
+      .grid-2 { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+      padding: 32px;
+      margin-bottom: 24px;
+      border: 1px solid var(--color-card-border);
+    }
+    .kbadge {
+      background: var(--color-primary-100);
+      color: var(--color-primary-700);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    .formula {
+      background: #0f172a;
+      color: #e2f2ff;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .formula pre {
+      white-space: pre-wrap;
+      font-size: 1.05em;
+      line-height: 1.5;
+    }
+    .small-muted {
+      color: var(--color-text-muted);
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--color-text-dark);
+    }
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+    }
+    h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+    }
+    @media(max-width: 980px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+    .bg-blue-600 {
+        background-color: var(--color-primary-600);
+    }
+    .bg-blue-600:hover {
+        background-color: var(--color-primary-700);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+    }
+    .image-container {
+      background-color: #f0f4f8;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 24px;
+      text-align: center;
+    }
+    .image-container img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .image-container p {
+      font-size: 0.875rem;
+      color: #64748b;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <a href="#" class="header-logo">
+        <img src="https://via.placeholder.com/32/FFFFFF/000000?text=F" alt="Logo"> Fluida Statis
+      </a>
+      <nav class="nav-menu hidden md:flex">
+        <a href="/index.html">Home</a>
+        <a href="#pengantar">Pengantar</a>
+        <a href="#rumus">Rumus</a>
+        <a href="#aplikasi">Aplikasi</a>
+        <a href="#video">Video & Quiz</a>
+      </nav>
+      <div class="hamburger-icon md:hidden" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <div class="mobile-nav-menu">
+        <a href="/index.html" class="mobile-nav-link">Home</a>
+      <a href="#pengantar" class="mobile-nav-link">Pengantar</a>
+      <a href="#rumus" class="mobile-nav-link">Rumus</a>
+      <a href="#aplikasi" class="mobile-nav-link">Aplikasi</a>
+      <a href="#video" class="mobile-nav-link">Video & Quiz</a>
+      <button class="close-btn" id="closeMobileNav">Tutup</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <section class="card mb-8">
+      <h1 class="text-4xl font-extrabold mb-4 text-center">Fluida Statis</h1>
+      <p class="text-xl small-muted text-center max-w-3xl mx-auto">
+        Pelajari konsep dasar, rumus, dan aplikasi Fluida Statis (fluida tak bergerak) dalam kehidupan sehari-hari.
+      </p>
+    </section>
+
+    <div class="grid-2 mt-8">
+      <main>
+        <section class="card" id="pengantar">
+          <h3>1. Konsep Dasar & Tekanan Hidrostatis</h3>
+          <p class="small-muted mt-3">
+            **Fluida Statis** adalah cabang fisika yang mempelajari fluida (cair dan gas) dalam keadaan diam atau tidak bergerak. Konsep utamanya meliputi tekanan, hukum Pascal, dan hukum Archimedes.
+          </p>
+          <div class="image-container">
+            
+            <p>Tekanan hidrostatis meningkat seiring kedalaman. Semakin dalam, semakin besar tekanan yang dirasakan.</p>
+          </div>
+          <h4 class="font-semibold mt-5">Tekanan Hidrostatis</h4>
+          <p class="small-muted mt-2">
+            Tekanan hidrostatis adalah tekanan yang diberikan oleh fluida yang diam pada suatu titik, akibat beratnya sendiri. Tekanan ini tergantung pada massa jenis fluida, percepatan gravitasi, dan kedalaman.
+          </p>
+          <div class="mt-4 formula">
+            \[ P_h = \rho \cdot g \cdot h \]
+            <p class="small-muted mt-2 text-white">
+              Keterangan:<br>
+              \( P_h \) = Tekanan hidrostatis (Pa atau N/m²)<br>
+              \( \rho \) (rho) = Massa jenis fluida (kg/m³)<br>
+              \( g \) = Percepatan gravitasi (m/s²)<br>
+              \( h \) = Kedalaman titik dari permukaan fluida (m)
+            </p>
+          </div>
+        </section>
+
+        <section class="card" id="rumus">
+          <h3>2. Hukum-Hukum Utama</h3>
+          <div class="mt-4">
+            <h4 class="font-semibold">Hukum Pascal</h4>
+            <p class="small-muted mt-2">
+              **Hukum Pascal** menyatakan bahwa tekanan yang diberikan pada fluida di dalam ruang tertutup akan diteruskan ke segala arah sama besar. Ini adalah prinsip di balik dongkrak hidrolik dan rem hidrolik.
+            </p>
+            <div class="image-container">
+              
+              <p>Ilustrasi hukum Pascal pada dongkrak hidrolik. Gaya kecil di piston satu dapat mengangkat beban berat di piston dua.</p>
+            </div>
+            <div class="mt-4 formula">
+              \[ \frac{F_1}{A_1} = \frac{F_2}{A_2} \]
+              <p class="small-muted mt-2 text-white">
+                Keterangan:<br>
+                \( F_1 \) dan \( F_2 \) = Gaya pada piston 1 dan 2<br>
+                \( A_1 \) dan \( A_2 \) = Luas permukaan piston 1 dan 2
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <h4 class="font-semibold">Hukum Archimedes</h4>
+            <p class="small-muted mt-2">
+              **Hukum Archimedes** menyatakan bahwa benda yang dicelupkan ke dalam fluida akan mendapatkan gaya ke atas (gaya apung) yang besarnya sama dengan berat fluida yang dipindahkan oleh benda tersebut.
+            </p>
+            <div class="image-container">
+              
+
+[Image of a floating object illustrating buoyant force]
+
+              <p>Hukum Archimedes menjelaskan mengapa benda bisa mengapung, tenggelam, atau melayang.</p>
+            </div>
+            <div class="mt-4 formula">
+              \[ F_{apung} = \rho_{fluida} \cdot g \cdot V_{celup} \]
+              <p class="small-muted mt-2 text-white">
+                Keterangan:<br>
+                \( F_{apung} \) = Gaya apung (N)<br>
+                \( \rho_{fluida} \) = Massa jenis fluida (kg/m³)<br>
+                \( g \) = Percepatan gravitasi (m/s²)<br>
+                \( V_{celup} \) = Volume benda yang tercelup dalam fluida (m³)
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="aplikasi">
+          <h3>3. Aplikasi dalam Kehidupan Sehari-hari</h3>
+          <ul class="list-disc ml-6 small-muted mt-3">
+            <li>**Jembatan Ponton:** Penerapan hukum Archimedes di mana jembatan mengapung di atas air.</li>
+            <li>**Kapal Selam:** Menggunakan prinsip Archimedes. Tangki pemberat diisi air untuk tenggelam atau dikosongkan untuk mengapung.</li>
+            <li>**Balon Udara:** Menerapkan gaya apung fluida (udara). Balon naik ketika gaya apungnya lebih besar dari berat totalnya.</li>
+            <li>**Rem Hidrolik Mobil:** Menggunakan prinsip hukum Pascal untuk meneruskan tekanan dari pedal rem ke roda.</li>
+          </ul>
+        </section>
+      </main>
+
+      <aside>
+        <section class="card" id="video">
+          <h4>Video Pembelajaran</h4>
+          <p class="small-muted mt-3">Tonton penjelasan Fluida Statis dari video YouTube ini untuk pemahaman yang lebih baik.</p>
+          <div class="mt-4" style="min-height:200px">
+            <div class="w-full h-48 rounded overflow-hidden">
+              <iframe class="w-full h-full" src="https://www.youtube.com/embed/g_T8N_I3030" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h4>Massa Jenis (\(\rho\))</h4>
+          <p class="small-muted mt-3">
+            Massa jenis adalah ukuran kerapatan suatu benda, didefinisikan sebagai massa per unit volume.
+          </p>
+          <div class="mt-3 formula">
+            \[ \rho = \frac{m}{V} \]
+            <p class="small-muted mt-2 text-white">
+              \( m \) = massa benda (kg)<br>
+              \( V \) = volume benda (m³)
+            </p>
+          </div>
+        </section>
+
+        <section class="card" id="quiz">
+          <h4>Latihan Soal Sederhana</h4>
+          <div class="mt-4">
+            <strong>Soal:</strong>
+            <p class="small-muted mt-1">Sebuah benda bervolume \(10^{-3} \text{ m}^3\) dicelupkan ke dalam air (\(\rho_{air} = 1000 \text{ kg/m}^3\)). Berapakah gaya apung yang dialami benda? (\(g=10 \text{ m/s}^2\))</p>
+            <details class="mt-3">
+              <summary class="font-medium">Lihat Jawaban</summary>
+              <div class="mt-2 small-muted">
+                Gunakan rumus \(F_{apung} = \rho_{fluida} \cdot g \cdot V_{celup}\).<br>
+                \[ F_{apung} = 1000 \cdot 10 \cdot 10^{-3} \]
+                \[ F_{apung} = 10 \text{ N} \]
+                Jadi, gaya apung yang dialami benda adalah **10 N**.
+              </div>
+            </details>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+
+  </div>
+
+  <script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeMobileNav = document.getElementById('closeMobileNav');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    hamburgerBtn.addEventListener('click', () => {
+      mobileNav.classList.add('open');
+    });
+
+    closeMobileNav.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+    });
+
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>

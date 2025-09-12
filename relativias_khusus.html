@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Relativitas Khusus – Fisika SMA (Kurikulum Merdeka & Cambridge)</title>
+
+  <!-- Icons (for navbar) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- MathJax -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root{
+      --space1: #0b1026;
+      --space2: #121b3a;
+      --space3: #0a2a43;
+      --accent: #00d4ff;
+      --accent-2: #7cf0ff;
+      --card: #0f1533;
+      --text: #ffffff;
+      --muted: #9fb2d3;
+      --ring: rgba(124, 240, 255, .35);
+      --radius: 16px;
+      --shadow: 0 10px 35px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text);
+      background: #062133;
+      background-attachment: fixed;
+      overflow-x:hidden;
+    }
+
+    /* --------- Topbar --------- */
+    header.topbar{
+      position:sticky; top:0; z-index:1000;
+      background: rgb(10, 15, 35);
+      border-bottom: 1px solid rgba(124,240,255,.15);
+    }
+    .topbar-inner{
+      max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:14px;
+      padding:12px 16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px;
+    }
+    nav.nav{
+      margin-left:auto; display:flex; gap:6px; flex-wrap:wrap;
+    }
+    nav.nav a{
+      color:var(--text); text-decoration:none; font-weight:600; font-size:.95rem;
+      padding:8px 12px; border-radius:10px;
+    }
+    nav.nav a:hover{ background:rgba(124,240,255,.08) }
+
+    /* Mobile menu */
+    .menu-btn{ display:none; margin-left:auto; background:transparent; color:var(--text); border:1px solid rgba(124,240,255,.35); padding:6px 10px; border-radius:8px }
+    @media (max-width:860px){
+     .topbar{
+        width: 100%;
+     }
+      nav.nav{ display:none; width:100%}
+      .menu-btn{ display:inline-flex; align-items:center; }
+      .topbar-inner{flex-wrap:wrap}
+      nav.nav.open{ display:flex; justify-content:center }
+    }
+
+    /* --------- Hero --------- */
+    .hero{
+      max-width:1200px; margin:22px auto; padding:22px 16px;
+    }
+    .hero-card{
+      background: rgba(10, 14, 32, 0.856);
+      border:1px solid rgba(124,240,255,.2);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:26px;
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .hero-card::after{
+      content:""; position:absolute; inset:-40% -10% auto auto;
+      width:65%; height:180%;
+      background: radial-gradient(closest-side, rgba(124,240,255,.15), transparent 70%);
+      transform:rotate(12deg);
+      z-index:-1;
+    }
+    .hero h1{
+      margin:0 0 6px 0; font-size: clamp(1.4rem, 2.6vw, 2rem);
+    }
+    .hero p{ margin:0; color:var(--muted) }
+
+    /* --------- Layout grid --------- */
+    .grid{
+      max-width:1200px; margin:18px auto; padding:0 10px;
+      display:grid; grid-template-columns: 1.2fr .8fr; gap:18px;
+    }
+    @media (max-width:980px){ 
+    .grid{ 
+        grid-template-columns: 1fr;
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 10px;
+        
+    }
+    .card{
+        width: 400px;
+    }
+
+
+
+
+
+}
+
+    /* --------- Cards --------- */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(124,240,255,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:10px;
+    }
+    .section-title{
+      display:flex; align-items:center; gap:10px;
+      color:var(--accent-2);
+      border-bottom:1px dashed rgba(124,240,255,.25);
+      padding-bottom:10px;  font-size:1.05rem;
+      letter-spacing:.2px;
+    }
+    p, li{ color:#eaf3ff; opacity:.95; line-height:1.7 }
+    ul{ padding-left:18px }
+
+    /* Formula block */
+    .formula{
+      background: rgba(255,255,255,.04);
+      border:1px dashed rgba(255,255,255,.12);
+      padding:10px 12px; border-radius:12px; margin:10px 0;
+    }
+    /* Rumus merah via MathJax container */
+    mjx-container[tex]{ color:#ff4d4d !important; }
+
+    /* Media embeds */
+    .media-grid{ display:grid; gap:14px }
+    .media-card{
+      border:1px solid rgba(124,240,255,.15);
+      border-radius:14px; overflow:hidden; box-shadow: var(--shadow);
+      transition: transform .2s ease;
+    }
+    .media-card:hover{ transform: translateY(-4px) }
+    .media-card iframe{ width:100%; height:260px; border:0; display:block }
+    .media-card .caption{ padding:10px 12px; color:var(--muted); font-weight:600 }
+
+    /* Interactive calc */
+    .calc{
+      display:grid; gap:12px;
+      
+      border:1px solid rgba(124,240,255,.2); border-radius:14px; padding:14px;
+    }
+    .calc .row{ display:grid; gap:10px; grid-template-columns: 150px 1fr; align-items:center }
+    .calc input[type="range"]{ width:100% }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      background: rgba(124,240,255,.09);
+      border:1px solid rgba(124,240,255,.25);
+      padding:8px 10px; border-radius:999px; font-weight:700; letter-spacing:.2px
+    }
+
+    /* Soal */
+    .soal{ border:1px solid rgba(124,240,255,.15); border-radius:14px; padding:14px; margin-bottom:14px; background:rgba(255,255,255,.03) }
+    details{ border-radius:10px; margin-top:8px; background: rgba(124,240,255,.06); border:1px solid rgba(124,240,255,.2) }
+    summary{
+      cursor:pointer; list-style:none; padding:10px 12px; color:#062133;
+      background: linear-gradient(90deg, #7cf0ff, #00d4ff); font-weight:800; border-radius:10px;
+    }
+    details[open] summary{ border-bottom-left-radius:0; border-bottom-right-radius:0 }
+    .pembahasan{ padding:10px 12px; color:#c0c0c0; background:rgba(12, 21, 68, 0.911) }
+
+    /* Footer note */
+    .note{ color:var(--muted); font-size:.93rem }
+
+    /* Smooth anchor scroll */
+    html{ scroll-behavior:smooth }
+
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>Relativitas Khusus – Fisika SMA</div>
+      </div>
+
+      <button class="menu-btn" id="menuBtn"><i class="fa fa-bars"></i> Menu</button>
+
+      <nav class="nav" id="mainNav" aria-label="Navigasi utama">
+        <a href="/index.html"><i class="fa fa-atom"></i> Beranda</a>
+        <a href="#ringkasan"><i class="fa fa-list-check"></i> Ringkasan</a>
+        <a href="#konsep"><i class="fa fa-wave-square"></i> Konsep Kunci</a>
+        <a href="#rumus"><i class="fa fa-superscript"></i> Rumus</a>
+        <a href="#interaktif"><i class="fa fa-sliders"></i> Interaktif</a>
+        <a href="#media"><i class="fa fa-photo-film"></i> Video</a>
+        <a href="#soal"><i class="fa fa-pen-to-square"></i> Soal</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-card">
+      <h1>Relativitas Khusus – Nuansa Ruang-Waktu</h1>
+      <p>Menyelaraskan pemahaman <em>Kurikulum Merdeka</em> & <em>Cambridge</em>: postulat Einstein, dilatasi waktu, kontraksi panjang, penjumlahan kecepatan relativistik, momentum & energi relativistik; dengan latihan soal kontekstual.</p>
+    </div>
+  </section>
+
+  <div class="grid">
+    <!-- MAIN CONTENT -->
+    <main class="card" role="main">
+      <section id="ringkasan">
+        <h2 class="section-title"><i class="fa fa-atom"></i> Ringkasan</h2>
+        <p>
+          Relativitas Khusus menjelaskan fisika pada kecepatan mendekati kecepatan cahaya \(c\). Dua pilar utamanya:
+          (1) Hukum fisika sama dalam semua kerangka inersial,
+          (2) Kecepatan cahaya di vakum konstan bagi semua pengamat inersial.
+          Konsekuensinya: <em>time dilation</em> (waktu mengembang), <em>length contraction</em> (panjang memendek), dan penjumlahan kecepatan non-Newtonian.
+        </p>
+      </section>
+
+      <section id="tujuan">
+        <h2 class="section-title"><i class="fa fa-list-check"></i> Tujuan Pembelajaran</h2>
+        <ul>
+          <li>Menjelaskan dua postulat relativitas khusus dan implikasinya.</li>
+          <li>Menggunakan faktor Lorentz \(\gamma\) untuk menghitung dilatasi waktu & kontraksi panjang.</li>
+          <li>Menerapkan penjumlahan kecepatan relativistik dan konsep simultanitas relatif.</li>
+          <li>Mengaitkan energi-massa \(E=\gamma mc^2\) dan batas kecepatan \(v<c\).</li>
+          <li>Menganalisis soal menengah-sulit dalam konteks eksperimen atau aplikasi (GPS, muon, accelerator).</li>
+        </ul>
+      </section>
+
+      <section id="konsep">
+        <h2 class="section-title"><i class="fa fa-wave-square"></i> Konsep Kunci</h2>
+        <ul>
+          <li><strong>Postulat 1:</strong> Hukum fisika identik di semua kerangka inersial.</li>
+          <li><strong>Postulat 2:</strong> Kecepatan cahaya \(c\) sama untuk semua pengamat inersial.</li>
+        </ul>
+
+        <div class="formula">
+          \[
+            \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
+          \]
+        </div>
+
+        <p><strong>Dilatasi Waktu:</strong> waktu terukur pengamat bergerak bertambah:
+          <span class="formula">\[ \Delta t = \gamma \, \Delta \tau \]</span>
+          di mana \(\Delta \tau\) adalah waktu wajar (proper time).
+        </p>
+
+        <p><strong>Kontraksi Panjang:</strong> panjang benda yang bergerak sepanjang sumbu geraknya memendek:
+          <span class="formula">\[ L = \frac{L_0}{\gamma} \]</span>
+          dengan \(L_0\) panjang wajar (rest length).
+        </p>
+
+        <p><strong>Penjumlahan Kecepatan Relativistik:</strong>
+          <span class="formula">\[
+            u' = \frac{u+v}{1+\frac{uv}{c^2}}
+          \]</span>
+        </p>
+
+        <p><strong>Energi & Momentum Relativistik:</strong></p>
+        <div class="formula">
+          \[
+            E = \gamma mc^2,\qquad p = \gamma m v,\qquad
+            E^2 = (pc)^2 + (mc^2)^2
+          \]
+        </div>
+      </section>
+
+      <section id="rumus">
+        <h2 class="section-title"><i class="fa fa-superscript"></i> Ringkasan Rumus</h2>
+        <ul>
+          <li>\(\displaystyle \gamma = \frac{1}{\sqrt{1-\frac{v^2}{c^2}}}\)</li>
+          <li>\(\displaystyle \Delta t = \gamma \Delta \tau\)</li>
+          <li>\(\displaystyle L = \frac{L_0}{\gamma}\)</li>
+          <li>\(\displaystyle u'=\frac{u+v}{1+\frac{uv}{c^2}}\)</li>
+          <li>\(\displaystyle E=\gamma mc^2,\; p=\gamma mv,\; E^2=(pc)^2+(mc^2)^2\)</li>
+        </ul>
+        <p class="note">Catatan: rumus-rumus ini berlaku pada gerak lurus relatif (1D) dan kerangka inersial.</p>
+      </section>
+
+      <section id="interaktif">
+        <h2 class="section-title"><i class="fa fa-sliders"></i> Kalkulator Interaktif (γ, Dilatasi Waktu, Kontraksi Panjang)</h2>
+        <div class="calc">
+          <div class="row">
+            <label for="beta"><strong>Kecepatan</strong> (\(v\) sebagai fraksi \(c\))</label>
+            <input id="beta" type="range" min="0" max="0.99" step="0.01" value="0.70" oninput="updateCalc()" />
+          </div>
+          <div class="row">
+            <div class="pill">β = <span id="betaVal">0.70</span></div>
+            <div class="pill">γ = <span id="gammaVal">1.400</span></div>
+          </div>
+          <div class="row">
+            <label for="properTime">Waktu Wajar \(\Delta \tau\) (jam)</label>
+            <input id="properTime" type="range" min="1" max="48" step="1" value="1" oninput="updateCalc()" />
+          </div>
+          <div class="row">
+            <div class="pill">\(\Delta t\) (jam pengamat) = <span id="dilated">1.40</span></div>
+            <div class="pill">Kontraksi \(L/L_0 =\) <span id="lengthRatio">0.714</span></div>
+          </div>
+          <p class="note">Geser slider untuk melihat bagaimana waktu melambat dan panjang memendek ketika kecepatan mendekati \(c\).</p>
+        </div>
+      </section>
+
+      <section id="soal">
+        <h2 class="section-title"><i class="fa fa-pen-to-square"></i> Contoh Soal & Pembahasan</h2>
+
+        <div class="soal">
+          <strong>Soal 1 (Dilatasi Waktu – Muon):</strong>
+          Muon berumur wajar \(\Delta \tau = 2{,}2\,\mu s\) bergerak dengan \(v=0{,}98c\).
+          Berapa umur teramati \(\Delta t\) di laboratorium?
+          <details>
+            <summary>Lihat Pembahasan</summary>
+            <div class="pembahasan">
+              \[
+                \gamma=\frac{1}{\sqrt{1-0{,}98^2}} \approx 5{,}025 \Rightarrow
+                \Delta t = \gamma \Delta \tau \approx 5{,}025 \times 2{,}2\,\mu s \approx 11{,}06\,\mu s.
+              \]
+            </div>
+          </details>
+        </div>
+
+        <div class="soal">
+          <strong>Soal 2 (Kontraksi Panjang – Berkas Partikel):</strong>
+          Sebuah “gerbang” detektor memiliki panjang wajar \(L_0=10\,\text{m}\) dalam kerangka gerbang.
+          Dalam kerangka partikel dengan \(v=0{,}8c\), berapa panjang gerbang yang terukur?
+          <details>
+            <summary>Lihat Pembahasan</summary>
+            <div class="pembahasan">
+              \[
+                \gamma=\frac{1}{\sqrt{1-0{,}8^2}}=\frac{1}{\sqrt{0{,}36}}=\frac{1}{0{,}6}=1{,}667,
+                \quad L=\frac{L_0}{\gamma}=\frac{10}{1{,}667}\approx 6{,}0\,\text{m}.
+              \]
+            </div>
+          </details>
+        </div>
+
+        <div class="soal">
+          <strong>Soal 3 (Penjumlahan Kecepatan):</strong>
+          Roket A bergerak \(0{,}6c\) relatif B. Dari A terlihat foton “drone” bergerak \(0{,}6c\) ke arah depan.
+          Berapa kecepatan drone relatif B?
+          <details>
+            <summary>Lihat Pembahasan</summary>
+            <div class="pembahasan">
+              \[
+                u'=\frac{u+v}{1+\frac{uv}{c^2}}=\frac{0{,}6c+0{,}6c}{1+0{,}36}=
+                \frac{1{,}2c}{1{,}36}\approx 0{,}882c.
+              \]
+            </div>
+          </details>
+        </div>
+
+        <div class="soal">
+          <strong>Soal 4 (Energi Relativistik):</strong>
+          Partikel bermassa diam \(m=0{,}5\,\text{kg}\) bergerak \(v=0{,}9c\).
+          Tentukan energi total \(E\) dan energi kinetik \(K\).
+          <details>
+            <summary>Lihat Pembahasan</summary>
+            <div class="pembahasan">
+              \[
+                \gamma=\frac{1}{\sqrt{1-0{,}9^2}}=\frac{1}{\sqrt{0{,}19}}\approx 2{,}294.
+              \]
+              \[
+                E=\gamma mc^2 \approx 2{,}294 \cdot 0{,}5\,c^2 = 1{,}147\,c^2.
+              \]
+              Energi diam: \(E_0 = mc^2 = 0{,}5\,c^2\).
+              Maka \(K=E-E_0 \approx (1{,}147-0{,}5)c^2=0{,}647\,c^2\).
+              (Jika \(c=3{\times}10^8\) m/s, kalikan dengan \(c^2=9{\times}10^{16}\) J.)
+            </div>
+          </details>
+        </div>
+
+        <div class="soal">
+          <strong>Soal 5 (Twin Paradox – Perhitungan Waktu):</strong>
+          Seorang kembar berlayar ke bintang dengan \(v=0{,}95c\) dan waktu proper di kapal \(4\) tahun (menuju), lalu kembali \(4\) tahun (menurut jam kapal).
+          Berapa waktu yang terlewat di Bumi (anggap percepatan/putar balik diabaikan)?
+          <details>
+            <summary>Lihat Pembahasan</summary>
+            <div class="pembahasan">
+              \[
+                \gamma=\frac{1}{\sqrt{1-0{,}95^2}} \approx 3{,}202.
+              \]
+              Waktu kapal (proper) total \(= 8\) tahun.
+              Waktu Bumi (dilatasi) \(= \gamma \times 8 \approx 25{,}6\) tahun.
+            </div>
+          </details>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- SIDEBAR MEDIA -->
+    <aside class="card">
+      <h2 class="section-title"><i class="fa fa-photo-film"></i> Video & Visual</h2>
+      <div class="media-grid">
+        <div class="media-card">
+          <iframe src="https://www.youtube.com/embed/hW7DW9NIO9M"
+                  title="Relativity (Kurzgesagt)"></iframe>
+          <div class="caption">Video populer: gambaran intuitif relativitas (bahasa Inggris).</div>
+        </div>
+        <div class="media-card">
+          <iframe src="https://www.youtube.com/embed/ttZCKAMpcAo"
+                  title="Relativitas Khusus (Indonesia)"></iframe>
+          <div class="caption">Bahasa Indonesia: dasar Relativitas Khusus & contoh.</div>
+        </div>
+        <div class="media-card">
+          <iframe src="https://www.youtube.com/embed/JRZgW1YjCKk"
+                  title="Time Dilation Explained"></iframe>
+          <div class="caption">Penjelasan dilatasi waktu & konsekuensi praktis (GPS, partikel).</div>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:16px"><i class="fa fa-book"></i> Catatan Belajar</h2>
+      <p class="note">
+        Fokus SMA: konsep & perhitungan 1D. Untuk pendalaman Cambridge lebih lanjut, eksplor transformasi Lorentz penuh, invarian interval, dan diagram ruang-waktu Minkowski.
+      </p>
+    </aside>
+  </div>
+
+  <script>
+    // Mobile nav toggle
+    const btn = document.getElementById('menuBtn');
+    const nav = document.getElementById('mainNav');
+    btn?.addEventListener('click', () => nav.classList.toggle('open'));
+
+    // Interactive calculator
+    const betaEl = document.getElementById('beta');
+    const tauEl = document.getElementById('properTime');
+    const betaVal = document.getElementById('betaVal');
+    const gammaVal = document.getElementById('gammaVal');
+    const dilated = document.getElementById('dilated');
+    const lengthRatio = document.getElementById('lengthRatio');
+
+    function updateCalc(){
+      const beta = parseFloat(betaEl.value);
+      const tau = parseFloat(tauEl.value); // hours
+      const gamma = 1 / Math.sqrt(1 - Math.min(beta*beta, 0.999999));
+      betaVal.textContent = beta.toFixed(2);
+      gammaVal.textContent = gamma.toFixed(3);
+      dilated.textContent = (gamma * tau).toFixed(2);
+      lengthRatio.textContent = (1 / gamma).toFixed(3);
+
+      // Render any MathJax that might change (not strictly needed here)
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    }
+    updateCalc();
+  </script>
+</body>
+</html>

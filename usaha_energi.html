@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usaha dan Energi - Fisika SMA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: #007ced;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #222;
+      padding: 0.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a {
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #007ced;
+      border-radius: 6px;
+    }
+    main {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h2 {
+      margin-top: 40px;
+      color: #007ced;
+      border-bottom: 2px solid #007ced;
+      padding-bottom: 5px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 20px 0;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    iframe, img {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+    iframe {
+      height: 400px;
+    }
+    img {
+      max-height: 300px;
+      object-fit: cover;
+    }
+    /* Warna rumus merah */
+    mjx-container[tex] {
+      color: red !important;
+    }
+    details summary {
+      cursor: pointer;
+      background: #007ced;
+      color: white;
+      padding: 8px;
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+    details summary:hover {
+      background: #005fa3;
+    }
+    details p {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f1f1f1;
+      border-radius: 8px;
+    }
+    @media screen and (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+      }
+      iframe {
+        height: 250px;
+      }
+    }
+
+    p1{
+        color: rgb(211, 19, 19);
+    }
+  </style>
+</head>
+<body>
+<header>Usaha dan Energi - Fisika SMA</header>
+<nav>
+<a href="/index.html"><i class="fas fa-dashboard"></i> Beranda</a>
+  <a href="#pengantar"><i class="fas fa-book"></i> Pengantar</a>
+  <a href="#usaha"><i class="fas fa-bolt"></i> Usaha</a>
+  <a href="#energi"><i class="fas fa-solar-panel"></i> Energi</a>
+  <a href="#konservasi"><i class="fas fa-sync"></i> Kekekalan</a>
+  <a href="#video"><i class="fas fa-play-circle"></i> Video</a>
+  <a href="#gambar"><i class="fas fa-image"></i> Gambar</a>
+  <a href="#soal"><i class="fas fa-pencil-alt"></i> Soal</a>
+</nav>
+
+<main>
+  <section id="pengantar" class="card">
+    <h2>Pengantar</h2>
+    <p>Materi <strong>Usaha dan Energi</strong> membahas bagaimana gaya bekerja pada benda dan mengubah energi. Konsep ini penting untuk memahami mekanika dan fenomena kehidupan sehari-hari.</p>
+  </section>
+
+  <section id="usaha" class="card">
+    <h2>Usaha</h2>
+    <p>Usaha adalah hasil kali gaya dan perpindahan benda. Jika gaya searah perpindahan:</p>
+    <p1>\[
+      W = F \cdot s
+    \]</p1>
+    <p>Jika gaya membentuk sudut \(\theta\) terhadap perpindahan:</p>
+    <p1>\[
+      W = F \cdot s \cdot \cos\theta
+    \]</p1>
+  </section>
+
+  <section id="energi" class="card">
+    <h2>Energi</h2>
+    <ul>
+      <li><strong>Energi Kinetik:</strong> \[
+        E_k = \frac{1}{2}mv^2
+      \]</li>
+      <li><strong>Energi Potensial:</strong> \[
+        E_p = mgh
+      \]</li>
+    </ul>
+  </section>
+
+  <section id="konservasi" class="card">
+    <h2>Hukum Kekekalan Energi Mekanik</h2>
+    <p>Pada sistem tanpa gaya non-konservatif:</p>
+    <p>\[
+      E_{m} = E_k + E_p = \text{konstan}
+    \]</p>
+  </section>
+
+  <section id="video" class="card">
+    <h2>Video Pembelajaran</h2>
+    <iframe src="https://www.youtube.com/embed/1E_6jHnNUm4" allowfullscreen></iframe>
+  </section>
+
+  <section id="gambar" class="card">
+    <h2>Ilustrasi Usaha dan Energi</h2>
+    <img src="https://i.ibb.co/NnNNtbf/work-energy.png" alt="Usaha dan Energi">
+  </section>
+
+  <section id="soal" class="card">
+    <h2>Contoh Soal & Pembahasan</h2>
+    <ol>
+      <li>
+        <strong>Soal 1:</strong> Sebuah benda \(5\,\text{kg}\) bergerak dengan kecepatan \(10\,\text{m/s}\). Hitung energi kinetiknya.
+        <details>
+          <summary>Lihat Pembahasan</summary>
+          <p>\[
+            E_k = \frac{1}{2}mv^2 = \frac{1}{2}(5)(10^2)=250\,\text{J}
+          \]</p>
+        </details>
+      </li>
+      <li>
+        <strong>Soal 2:</strong> Benda \(3\,\text{kg}\) diangkat ke ketinggian \(5\,\text{m}\). 
+        <details>
+          <summary>Lihat Pembahasan</summary>
+          <p>\[
+            E_p = mgh = 3\times10\times5=150\,\text{J}
+          \]</p>
+        </details>
+      </li>
+      <li>
+        <strong>Soal 3:</strong> Sebuah gaya \(20\,\text{N}\) bekerja sejauh \(4\,\text{m}\) dengan sudut \(60^\circ\).
+        <details>
+          <summary>Lihat Pembahasan</summary>
+          <p>\[
+            W = F \cdot s \cdot \cos\theta = 20\times4\times\cos60^\circ = 40\,\text{J}
+          \]</p>
+        </details>
+      </li>
+      <li>
+        <strong>Soal 4:</strong> Bola \(2\,\text{kg}\) dijatuhkan dari \(10\,\text{m}\).
+        <details>
+          <summary>Lihat Pembahasan</summary>
+          <p>\[
+            v = \sqrt{2gh} = \sqrt{2\times10\times10} = 14.1\,\text{m/s}
+          \]</p>
+        </details>
+      </li>
+      <li>
+        <strong>Soal 5:</strong> Benda \(1\,\text{kg}\) meluncur di bidang miring setinggi \(8\,\text{m}\).
+        <details>
+          <summary>Lihat Pembahasan</summary>
+          <p>\[
+            v = \sqrt{2gh} = \sqrt{2\times10\times8} = 12.6\,\text{m/s}
+          \]</p>
+        </details>
+      </li>
+    </ol>
+  </section>
+</main>
+</body>
+</html>

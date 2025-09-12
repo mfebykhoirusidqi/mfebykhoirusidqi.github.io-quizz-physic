@@ -14,53 +14,53 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
 
   <style>
-    :root{
-      --bg: #f5f8fb;
+   :root {
+      --bg: #f8fafc;
+      --primary: #007ced;
+      --secondary: #00b4d8;
       --card: #ffffff;
-      --primary: #0b72d9;
-      --accent: #00b4d8;
-      --muted: #657085;
-      --success: #2a9d8f;
-      --danger: #e63946;
-      --glass: rgba(255,255,255,0.6);
-      --radius: 14px;
-      --shadow: 0 10px 30px rgba(16,24,40,0.08);
+      --text: #1e293b;
+      --muted: #64748b;
+      --radius: 16px;
+      --shadow: 0 6px 18px rgba(0,0,0,0.08);
     }
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial;
-      background: linear-gradient(180deg,#eef6ff 0%, var(--bg) 40%);
-      color: #12263a;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:30px;
-      display:flex;
-      justify-content:center;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .wrap{
-      width:100%;
-      max-width:1100px;
-      margin:0 auto;
-    }
-
-    header.hero{
-      background: linear-gradient(135deg,var(--primary),var(--accent));
-      color:white;
-      padding:36px;
-      border-radius: var(--radius);
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      border-radius: 0 0 var(--radius) var(--radius);
       box-shadow: var(--shadow);
-      margin-bottom:26px;
     }
-    header.hero h1{font-size:1.9rem;margin:0 0 6px 0}
-    header.hero p{margin:0;opacity:0.95}
+    header h1 { font-size: 2rem; font-weight: 700; }
+    header p { margin-top: 10px; font-size: 1rem; }
+
+    nav {
+      background: white;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
 
     .grid{
       display:grid;
       gap:22px;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: 1fr 360px;  
     }
 
     /* main card */
@@ -172,12 +172,16 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="hero" role="banner">
-      <h1>Materi Listrik DC (Arus Searah)</h1>
-      <p>Versi ringkas & terstruktur untuk siswa SMA — disusun agar sesuai tujuan pembelajaran Kurikulum Merdeka: konsep, keterampilan numerik, dan penerapan eksperimen sederhana.</p>
-    </header>
+  <header>
+  <h1>Listrik DC (Arus Searah)</h1>
+  <p>Materi Fisika SMA Kurikulum Merdeka — Lengkap, interaktif, dan mudah dipahami</p>
+</header>
 
+<nav>
+  <a href="/index.html">Beranda</a>
+  <a href="#materi">Materi</a>
+  <a href="#latihan">Latihan</a>
+</nav> <br>
     <div class="grid">
       <!-- MAIN -->
       <main class="card" role="main">
@@ -197,7 +201,7 @@
           </ul>
         </section>
 
-        <section>
+        <section id="materi">
           <h2 class="section-title">1. Arus Listrik</h2>
           <p><strong>Arus listrik (I)</strong> adalah banyaknya muatan listrik yang mengalir melalui penampang penghantar tiap satuan waktu.</p>
           <p class="formula">\( I = \dfrac{\Delta Q}{\Delta t} \)</p>
@@ -282,7 +286,7 @@
           </table>
         </section>
 
-        <section>
+        <section id="latihan">
           <h2 class="section-title">10. Contoh Soal & Pembahasan (Latihan)</h2>
 
           <!-- Soal 1 -->
